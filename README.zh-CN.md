@@ -1,6 +1,6 @@
-# Nextjs Web3 Starter
+# Nextjs Starter
 
-> 这是一个 nextjs with turbopack 的 starter。兼顾 Web3 项目和 Nodejs + Prisma 后端。你可以纯 nextjs 前端，也可以前后端一起写，做一个小全栈仔。
+> 这是一个 nextjs with turbopack 的 starter。兼顾 项目和 Nodejs + Prisma 后端。你可以纯 nextjs 前端，也可以前后端一起写，做一个小全栈仔。
 
 **中文** | [English](./README.md)
 

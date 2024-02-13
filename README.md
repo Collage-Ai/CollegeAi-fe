@@ -1,6 +1,6 @@
-# Nextjs Web3 Starter
+# Nextjs Starter
 
-> This is a starter for nextjs with turbopack. Consider both Web3 project and Nodejs + Prisma backend. You can use the pure nextjs front-end, or you can write the front-end and back-end together to make a small full-stack boy.
+> This is a starter for nextjs with turbopack. Consider both project and Nodejs + Prisma backend. You can use the pure nextjs front-end, or you can write the front-end and back-end together to make a small full-stack boy.
 
 **English** | [中文](./README.zh-CN.md)
 
@@ -111,6 +111,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 │   ├── cookie.ts                            cookie utils
 │   ├── helpers.ts                           utils functions
 │   ├── request.ts                           http request
-│   └── web3.ts                              web3 functions
+│   └── web3.ts                              functions
 └── views                                    app dir client component
 ```
