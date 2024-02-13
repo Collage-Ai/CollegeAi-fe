@@ -36,7 +36,7 @@
       "error",
       {
         "singleQuote": true,
-        "semi": false,
+        "semi": true,
         "bracketSpacing": true,
         "tabWidth": 2,
         "useTabs": false,
