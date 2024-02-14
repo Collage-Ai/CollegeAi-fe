@@ -3,12 +3,12 @@ import React from 'react';
 import { Button, Card, Flex, Typography } from 'antd';
 
 const cardStyle: React.CSSProperties = {
-  width: 620
+  width: '50vw'
 };
 
 const imgStyle: React.CSSProperties = {
   display: 'block',
-  width: 273
+  width: '20vw'
 };
 
 const Card1: React.FC = () => (
@@ -27,7 +27,7 @@ const Card1: React.FC = () => (
         vertical
         align="flex-end"
         justify="space-between"
-        style={{ padding: 32 }}
+        style={{ padding: 24 }}
       >
         <Typography.Title level={3}>
           “antd is an enterprise-class UI design language and React UI library.”

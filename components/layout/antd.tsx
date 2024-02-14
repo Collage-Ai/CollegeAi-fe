@@ -47,19 +47,19 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   } = theme.useToken();
 
   return (
-    <Layout className="h-full">
+    <Layout className="min-h-full">
       <AppHeader items={items1} />
       <Layout>
         <AppSider items={items2} style={{ background: colorBgContainer }} />
         <Layout style={{ padding: '0 24px 24px' }}>
           {/* Display data fetched with SWR */}
-          {error ? (
+          {/* {error ? (
             <div>Failed to load</div>
           ) : !data ? (
             <div>Loading...</div>
           ) : (
             <div>{JSON.stringify(data)}</div>
-          )}
+          )} */}
           {/* 插入 children */}
           {children}
         </Layout>
