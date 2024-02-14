@@ -21,11 +21,18 @@ const AppSider: React.FC<{
           key: '1-1',
           label: '行业洞察',
           onClick: () => {
-            // 跳转到 /browse/insights
-            router.push('/browse/insights');
+            // 跳转到/insights
+            router.push('/insights');
           }
         },
-        { key: '1-2', label: '技能提升' }
+        {
+          key: '1-2',
+          label: '技能提升',
+          onClick: () => {
+            // 跳转到/skills
+            router.push('/skills');
+          }
+        }
       ]
     },
     { key: '2', label: '我的主页', icon: <LaptopOutlined /> }
