@@ -1,13 +1,27 @@
 // app/components/AppSider.tsx
 import React from 'react';
 import { Layout, Menu, MenuProps } from 'antd';
+import { LaptopOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
 
+const items: MenuProps['items'] = [
+  //子菜单
+  {
+    key: '1',
+    label: 'Browse',
+    icon: <LaptopOutlined />,
+    children: [
+      { key: '1-1', label: '行业洞察' },
+      { key: '1-2', label: '技能提升' }
+    ]
+  },
+  { key: '2', label: '我的主页', icon: <LaptopOutlined /> }
+];
+
 const AppSider: React.FC<{
-  items: MenuProps['items'];
   style?: React.CSSProperties;
-}> = ({ items, style }) => (
+}> = ({ style }) => (
   <Sider style={style}>
     <Menu
       mode="inline"

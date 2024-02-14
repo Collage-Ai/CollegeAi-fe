@@ -19,27 +19,6 @@ const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
   label: `nav ${key}`
 }));
 
-const items2: MenuProps['items'] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined
-].map((icon, index) => {
-  const key = String(index + 1);
-
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`
-      };
-    })
-  };
-});
-
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data, error } = useSWR('/api/data', fetcher); // 使用实际的 API 端点
   const {
@@ -50,7 +29,7 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <Layout className="min-h-full">
       <AppHeader items={items1} />
       <Layout>
-        <AppSider items={items2} style={{ background: colorBgContainer }} />
+        <AppSider style={{ background: colorBgContainer }} />
         <Layout style={{ padding: '0 24px 24px' }}>
           {/* Display data fetched with SWR */}
           {/* {error ? (
