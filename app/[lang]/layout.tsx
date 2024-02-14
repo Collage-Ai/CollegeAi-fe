@@ -6,6 +6,7 @@ import Navbar from '@/components/navbar';
 import { Metadata } from 'next';
 import { DefaultMetadata } from '@/components/theme/metadata';
 import { i18n } from '@/i18n/config';
+import AppLayout from '@/components/layout/antd';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -52,8 +53,10 @@ export default function RootLayout({
         <Flexible />
         <Toaster />
         <RootLayoutClient>
-          <Navbar />
-          {children}
+          <AppLayout>
+            <Navbar />
+            {children}
+          </AppLayout>
         </RootLayoutClient>
       </body>
     </html>
