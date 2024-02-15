@@ -18,3 +18,9 @@ export interface ResType {
   code: number;
   message: string;
 }
+
+export type RegisterReqType = {
+  username: string;
+  password: string;
+  phone: string;
+};
