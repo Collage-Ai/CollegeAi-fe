@@ -3,6 +3,7 @@ import ChatComponent from '@/components/chatComponent';
 import { fetcher } from '@/utils/fetcher';
 import { Card, Flex, Input } from 'antd';
 import useSWR from 'swr';
+import { Provider } from 'use-socket.io-hooks';
 export default function Page() {
   //const { data } = useSWR('/api/user', fetcher);
   return (
@@ -20,6 +21,7 @@ export default function Page() {
             <h2>Related</h2>
             <p>这是一个测试</p>
           </div>
+
           <ChatComponent />
         </Card>
         <Card title="最新行业信息"></Card>

@@ -32,6 +32,7 @@
   },
   "rules": {
     "react/react-in-jsx-scope": "off",
+    //"react-hooks/rules-of-hooks": "warn",
     "prettier/prettier": [
       "error",
       {

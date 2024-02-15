@@ -1,19 +1,37 @@
+'use client';
+
 // components/ChatComponent.tsx
 import React, { useEffect, useState } from 'react';
-import { Button, Input, List } from 'antd';
+import { Input, List } from 'antd';
 import {
+  Provider,
   useConnect,
   useDisconnect,
   useEmit,
   useListener,
   useMounted
 } from 'use-socket.io-hooks';
+import { Button } from '../button';
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<string[]>([]);
   const pushMessage = useEmit('sendMessage');
 
+  // useEffect(() => {
+  //   // 连接到服务器
+  //   useConnect();
+
+  //   // 监听服务器发来的消息
+  //   useListener('sendMessage', (msg: string) => {
+  //     setMessages((prevMessages) => [...prevMessages, msg]);
+  //   });
+
+  //   // 组件卸载时断开连接
+  //   return () => {
+  //     useDisconnect();
+  //   };
+  // }, []);
   useListener('sendMessage', (msg: string) => {
     setMessages((prevMessages) => [...prevMessages, msg]);
   });
@@ -27,6 +45,7 @@ const ChatComponent: React.FC = () => {
 
   return (
     <div className="flex h-full flex-col">
+      <Provider url="http://localhost:3000" />
       <List
         className="flex-1 overflow-auto"
         dataSource={messages}
@@ -44,9 +63,7 @@ const ChatComponent: React.FC = () => {
           onChange={(e) => setMessage(e.target.value)}
           onPressEnter={sendMessage}
         />
-        <Button type="primary" onClick={sendMessage}>
-          发送
-        </Button>
+        <Button onClick={sendMessage}>发送</Button>
       </div>
     </div>
   );
