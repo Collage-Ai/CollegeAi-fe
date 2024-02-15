@@ -20,7 +20,7 @@ const items1: MenuProps['items'] = ['1', '2', '3'].map((key) => ({
 }));
 
 const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { data, error } = useSWR('/api/data', fetcher); // 使用实际的 API 端点
+  //const { data, error } = useSWR('/api/data', fetcher); // 使用实际的 API 端点
   const {
     token: { colorBgContainer, borderRadiusLG }
   } = theme.useToken();

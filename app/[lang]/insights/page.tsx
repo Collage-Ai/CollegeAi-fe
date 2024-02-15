@@ -1,9 +1,10 @@
 'use client';
+import ChatComponent from '@/components/chatComponent';
 import { fetcher } from '@/utils/fetcher';
 import { Card, Flex, Input } from 'antd';
 import useSWR from 'swr';
 export default function Page() {
-  const { data } = useSWR('/api/user', fetcher);
+  //const { data } = useSWR('/api/user', fetcher);
   return (
     <>
       <h1>你的专属行业洞察</h1>
@@ -19,6 +20,7 @@ export default function Page() {
             <h2>Related</h2>
             <p>这是一个测试</p>
           </div>
+          <ChatComponent />
         </Card>
         <Card title="最新行业信息"></Card>
       </Flex>

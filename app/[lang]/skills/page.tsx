@@ -2,6 +2,6 @@
 import { fetcher } from '@/utils/fetcher';
 import useSWR from 'swr';
 export default function Page() {
-  const { data } = useSWR('/api/user', fetcher);
-  return <h1>{data.name}</h1>;
+  //const { data } = useSWR('/api/user', fetcher);
+  return <div>data.name</div>;
 }
