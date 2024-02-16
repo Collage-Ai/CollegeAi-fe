@@ -1,25 +1,33 @@
 import React, { useEffect, useState } from 'react';
 
-type TypewriterEffectProps = {
+interface TypewriterEffectProps {
   message: string;
-};
+  typingSpeed?: number; // 可选的打字速度属性，以毫秒为单位
+}
 
-const TypewriterEffect = ({ message }: TypewriterEffectProps) => {
+const TypewriterEffect: React.FC<TypewriterEffectProps> = ({
+  message,
+  typingSpeed = 50
+}) => {
   const [displayedMessage, setDisplayedMessage] = useState('');
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index < message.length) {
-        setDisplayedMessage((prev) => prev + message[index]);
-        index++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 50); // 每50毫秒显示一个字符
+    let animationFrameId: number;
 
-    return () => clearInterval(timer);
-  }, [message]);
+    const type = () => {
+      if (index < message.length) {
+        setDisplayedMessage((prev) => prev + message.charAt(index));
+        setIndex((prevIndex) => prevIndex + 1);
+        // 使用requestAnimationFrame代替setTimeout
+        animationFrameId = requestAnimationFrame(type);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(type);
+
+    return () => cancelAnimationFrame(animationFrameId); // 清理函数
+  }, [message, index]);
 
   return <div>{displayedMessage}</div>;
 };
