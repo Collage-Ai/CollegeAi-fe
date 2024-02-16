@@ -12,6 +12,9 @@ module.exports = withTV({
   future: {
     hoverOnlyWhenSupported: true
   },
+  corePlugins: {
+    preflight: false
+  },
   theme: {
     screens: {
       sm: '640px',
