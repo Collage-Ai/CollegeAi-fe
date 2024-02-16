@@ -1,6 +1,6 @@
 export async function getAIResponse(message: string) {
-  const aiApiUrl = process.env.API_URL;
-  const apiKey = process.env.API_KEY;
+  const aiApiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   try {
     const response = await fetch(aiApiUrl ?? '', {
