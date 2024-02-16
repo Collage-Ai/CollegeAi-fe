@@ -6,23 +6,33 @@ const withPWA = require('@ducanh2912/next-pwa').default({
   aggressiveFrontEndNavCaching: true
 });
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  experimental: {
-    optimizePackageImports: []
-    // serverComponentsExternalPackages: ['@prisma/client'] // prisma support
-  },
-  rewrites: () => {
-    return [
-      {
-        // 注意，加了一个be/，为什么？为了区分我们项目写的接口，避免被代理进去了。我们只需要代理外部的接口
-        // Note that a be/ is added, why? In order to distinguish the interface written by our project, avoid being proxied. We only need to proxy the external interface
-        source: '/api/:slug*',
-        destination: `${process.env.BACKEND_URL}/api/:slug*`
-      }
-    ];
-  }
-};
+// 导入next-transpile-modules，如果您的项目中还没有这个库，请先安装它
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const withTM = require('next-transpile-modules')([]);
 
-module.exports = withPWA(nextConfig);
+module.exports = withPWA(
+  withTM({
+    reactStrictMode: true,
+    webpack(config, options) {
+      // 使用@svgr/webpack处理SVG文件
+      config.module.rules.push({
+        test: /\.svg$/,
+        use: ['@svgr/webpack']
+      });
+
+      return config;
+    },
+    experimental: {
+      optimizePackageImports: []
+      // serverComponentsExternalPackages: ['@prisma/client'] // prisma support
+    },
+    rewrites: () => {
+      return [
+        {
+          source: '/api/:slug*',
+          destination: `${process.env.BACKEND_URL}/api/:slug*`
+        }
+      ];
+    }
+  })
+);

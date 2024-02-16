@@ -36,7 +36,7 @@ const ChatComponent: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full w-[40vw] flex-col">
       <List
         className="flex-1 overflow-auto"
         dataSource={chatList}
