@@ -84,7 +84,7 @@ table {
   border-collapse: collapse;
 }
 
-button,
+/* button,
 input,
 optgroup,
 select,
@@ -95,9 +95,9 @@ textarea {
   color: inherit;
   margin: 0;
   padding: 0;
-}
+} */
 
-button,
+/* button,
 select {
   text-transform: none;
 }
@@ -108,7 +108,7 @@ button,
 [type='submit'] {
   -webkit-appearance: button;
   background-image: none;
-}
+} */
 
 :-moz-focusring {
   outline: auto;

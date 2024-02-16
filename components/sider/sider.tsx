@@ -32,6 +32,13 @@ const AppSider: React.FC<{
             // 跳转到/skills
             router.push('/skills');
           }
+        },
+        {
+          key: '1-3',
+          label: '登录',
+          onClick: () => {
+            router.push('/login');
+          }
         }
       ]
     },
