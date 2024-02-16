@@ -3,6 +3,7 @@ import React from 'react';
 import { MessageArgs } from '../../types/user';
 import { OpenAIOutlined, UserOutlined } from '@ant-design/icons';
 import TypewriterEffect from '../typeWriter';
+import MarkdonwIt from 'markdown-it';
 
 interface MessageItemProps {
   message: MessageArgs;
@@ -10,6 +11,8 @@ interface MessageItemProps {
 
 const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
   const isUserMessage = message.sender === 'user';
+  const md = new MarkdonwIt();
+  const html = md.render(message.message);
 
   return (
     <div
@@ -30,9 +33,7 @@ const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
           isUserMessage ? 'bg-blue-100' : 'bg-gray-100'
         } max-w-[75%]`}
       >
-        <div>
-          <TypewriterEffect message={message.message} />
-        </div>
+        <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>
       {!isUserMessage && (
         <div className="flex items-center">
