@@ -20,10 +20,12 @@ export const useUserStore = create<UserState>((set) => ({
 //存储聊天记录
 interface ChatState {
   chatList: MessageArgs[];
-  setChatList: (chatList: MessageArgs[]) => void;
+  setChatList: (fn: (currentList: MessageArgs[]) => MessageArgs[]) => void;
 }
 
 export const useChatStore = create<ChatState>((set) => ({
   chatList: [],
-  setChatList: (chatList) => set({ chatList })
+  // 允许setChatList接受一个函数，该函数基于当前chatList计算新的chatList
+  setChatList: (fn: (currentList: MessageArgs[]) => MessageArgs[]) =>
+    set((state) => ({ chatList: fn(state.chatList) }))
 }));

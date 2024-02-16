@@ -12,16 +12,6 @@ export default function Page() {
       <Flex>
         <Card title="基本信息"></Card>
         <Card>
-          <Input placeholder="请输入关键词" title="Prompt" />
-          <div>
-            <h2>Ai回答</h2>
-            <p>这是一个测试</p>
-          </div>
-          <div>
-            <h2>Related</h2>
-            <p>这是一个测试</p>
-          </div>
-
           <ChatComponent />
         </Card>
         <Card title="最新行业信息"></Card>
