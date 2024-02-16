@@ -1,6 +1,8 @@
+import { UserBaseInfo } from './user';
 export type LoginResType = {
   data?: {
     token: string;
+    userBaseInfo: UserBaseInfo;
     expire: string;
   };
   code: number;
@@ -8,9 +10,11 @@ export type LoginResType = {
 };
 
 export type LoginReqType = {
-  message: string;
-  sig: string;
-  address: string;
+  // message: string;
+  // sig: string;
+  // address: string;
+  phone: string;
+  password: string;
 };
 
 export interface ResType {
@@ -19,8 +23,4 @@ export interface ResType {
   message: string;
 }
 
-export type RegisterReqType = {
-  username: string;
-  password: string;
-  phone: string;
-};
+export type RegisterReqType = UserBaseInfo;

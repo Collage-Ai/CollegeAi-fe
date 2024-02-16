@@ -2,7 +2,9 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginResType } from '@/types/api';
+import { LoginReqType, LoginResType } from '@/types/api';
+import { postLoginData } from '@/utils/fetcher';
+import { useUserStore } from '@/store/userStore';
 
 type LoginFormProps = {
   onLoginSuccess: () => void;
@@ -10,9 +12,17 @@ type LoginFormProps = {
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
   const [loading, setLoading] = useState(false);
+  const { setUser } = useUserStore();
 
-  const onFinish = (values: LoginResType) => {
+  const onFinish = async (values: LoginReqType) => {
     setLoading(true);
+    const res = await postLoginData(values);
+    if (res) {
+      setUser(res);
+      setLoading(false);
+      onLoginSuccess(); // 登录成功后的回调
+      message.success('登录成功！');
+    }
     console.log('Received values of form: ', values);
     // 这里替换为你的登录逻辑
     setTimeout(() => {

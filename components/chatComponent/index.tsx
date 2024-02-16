@@ -1,25 +1,24 @@
 // components/ChatComponent.tsx
 import React, { useEffect, useState } from 'react';
 import { Button, Input, List } from 'antd';
-import io from 'socket.io-client';
-
-// 建立 socket 连接
-const socket = io('ws:localhost:3000/chat');
+import useSWR from 'swr';
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState<string[]>([]);
 
-  useEffect(() => {
-    // 监听服务器发来的消息
-    socket.on('receiveMessage', (msg: string) => {
-      setMessages((prevMessages) => [...prevMessages, msg]);
-    });
-  }, []);
+  // useEffect(() => {
+  //   //使用swr
+
+  // }, []);
 
   const sendMessage = () => {
     if (message) {
-      socket.emit('sendMessage', message); // 向服务器发送消息
+      // useSWR('/api/chat', fetcher, {
+      //   method: 'POST',
+      //   body: JSON.stringify({ message }),
+      // });
+
       setMessage(''); // 清空输入框
     }
   };

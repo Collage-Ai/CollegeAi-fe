@@ -1,8 +1,11 @@
 // components/RegisterForm.tsx
 import React, { useState } from 'react';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input, message, Radio } from 'antd';
 import { LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import { RegisterReqType } from '@/types/api';
+import { postRegData } from '@/utils/fetcher';
+import useSWR from 'swr';
+import toast from '../toast/toast';
 
 type RegisterFormProps = {
   onRegisterSuccess: () => void;
@@ -10,16 +13,15 @@ type RegisterFormProps = {
 
 const RegisterForm = ({ onRegisterSuccess }: RegisterFormProps) => {
   const [loading, setLoading] = useState(false);
+  //const { data, error } = useSWR('/user/register', fetcher);
 
-  const onFinish = (values: RegisterReqType) => {
+  const onFinish = async (values: RegisterReqType) => {
     setLoading(true);
-    console.log('Received values of form: ', values);
-    // 这里替换为你的注册逻辑
-    setTimeout(() => {
+    if (await postRegData(values)) {
       setLoading(false);
       onRegisterSuccess(); // 注册成功后的回调
-      message.success('注册成功！');
-    }, 1000);
+      toast.success('注册成功！');
+    }
   };
 
   return (
@@ -56,6 +58,22 @@ const RegisterForm = ({ onRegisterSuccess }: RegisterFormProps) => {
           prefix={<PhoneOutlined className="site-form-item-icon" />}
           placeholder="手机号码"
         />
+      </Form.Item>
+      <Form.Item
+        name="captcha"
+        rules={[{ required: true, message: '请输入验证码!' }]}
+      >
+        <Input
+          prefix={<LockOutlined className="site-form-item-icon" />}
+          placeholder="验证码"
+        />
+      </Form.Item>
+      <Form.Item name="education" rules={[{ required: true, message: '学历' }]}>
+        <Radio.Group name="education">
+          <Radio value={1}>高中</Radio>
+          <Radio value={2}>本科</Radio>
+          <Radio value={3}>硕士</Radio>
+        </Radio.Group>
       </Form.Item>
       <Form.Item>
         <Button
