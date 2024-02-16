@@ -8,6 +8,7 @@ export type CollegeStage =
   | '其他';
 
 export type UserBaseInfo = {
+  id: number;
   avatar?: string;
   phone: string;
   username: string;
@@ -19,4 +20,10 @@ export type UserBaseInfo = {
   advantage: string; //个人优势
   email: string;
   password: string;
+};
+
+export type MessageArgs = {
+  userId: number | undefined;
+  message: string;
+  sender: 'user' | 'ai';
 };

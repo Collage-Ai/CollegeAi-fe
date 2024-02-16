@@ -1,6 +1,6 @@
 import { LoginReqType, LoginResType } from '@/types/api';
 import request from './request';
-import { UserBaseInfo } from '@/types/user';
+import { MessageArgs, UserBaseInfo } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
 
 // utils/fetcher.ts
@@ -54,6 +54,30 @@ export const postLoginData = async (data: LoginReqType) => {
         }
         return false;
       });
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+/**
+ * 发送聊天消息到服务器
+ * @param message 消息内容
+ * @returns {Promise<boolean>} 是否发送成功
+ * @throws {Error} 发送失败时抛出异常
+ * */
+export const sendMsgToServer = async (
+  messageArgs: MessageArgs
+): Promise<boolean> => {
+  try {
+    const res = await request('/chat/storeMessage', {
+      method: 'POST',
+      body: JSON.stringify({ messageArgs })
+    });
+    if (res.ok) {
+      return true;
     }
     return false;
   } catch (err) {

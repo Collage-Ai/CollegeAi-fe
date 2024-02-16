@@ -1,9 +1,8 @@
-// store/userStore.ts
 import create from 'zustand';
-import { UserBaseInfo } from '../types/user';
+import { MessageArgs, UserBaseInfo } from '../types/user';
 
 interface UserState {
-  user: { userBaseInfo: UserBaseInfo } | null;
+  user: UserBaseInfo | null;
   setUser: (user: UserState) => void; // Updated parameter type
   logout: () => void;
   isLogin: boolean;
@@ -16,4 +15,15 @@ export const useUserStore = create<UserState>((set) => ({
   logout: () => set({ user: null }), // 退出登录，清空用户信息
   isLogin: false,
   setIsLogin: (isLogin) => set({ isLogin })
+}));
+
+//存储聊天记录
+interface ChatState {
+  chatList: MessageArgs[];
+  setChatList: (chatList: MessageArgs[]) => void;
+}
+
+export const useChatStore = create<ChatState>((set) => ({
+  chatList: [],
+  setChatList: (chatList) => set({ chatList })
 }));

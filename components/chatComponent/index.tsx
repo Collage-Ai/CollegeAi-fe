@@ -1,24 +1,31 @@
 // components/ChatComponent.tsx
 import React, { useEffect, useState } from 'react';
 import { Button, Input, List } from 'antd';
-import useSWR from 'swr';
+import io from 'socket.io-client';
+import { MessageArgs, UserBaseInfo } from '../../types/user';
+import { useChatStore, useUserStore } from '@/store/userStore';
+import { sendMsgToServer } from '@/utils/fetcher';
+import { getAIResponse } from '@/utils/ai';
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<string[]>([]);
+  const { chatList, setChatList } = useChatStore();
+  const { user } = useUserStore();
 
-  // useEffect(() => {
-  //   //使用swr
-
-  // }, []);
-
+  //当用户发送消息时，请求ai回答，并将消息显示在聊天框中，同时将消息发送到服务器
   const sendMessage = () => {
+    const msg: MessageArgs = { userId: user?.id, message, sender: 'user' };
     if (message) {
-      // useSWR('/api/chat', fetcher, {
-      //   method: 'POST',
-      //   body: JSON.stringify({ message }),
-      // });
-
+      setChatList([...chatList, msg]);
+      getAIResponse(message).then((res) => {
+        const aiMsg: MessageArgs = {
+          userId: user?.id,
+          message: res,
+          sender: 'ai'
+        };
+        setChatList([...chatList, aiMsg]);
+      });
+      sendMsgToServer(msg);
       setMessage(''); // 清空输入框
     }
   };
@@ -27,7 +34,7 @@ const ChatComponent: React.FC = () => {
     <div className="flex h-full flex-col">
       <List
         className="flex-1 overflow-auto"
-        dataSource={messages}
+        dataSource={chatList.map((item) => item.message)}
         renderItem={(item) => (
           <List.Item>
             <div className="message rounded bg-blue-100 p-2">{item}</div>
