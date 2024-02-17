@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand';
 import { MessageArgs, UserBaseInfo } from '../types/user';
 
 interface UserState {

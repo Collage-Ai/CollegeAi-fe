@@ -3,6 +3,7 @@ export async function getAIResponse(message: string) {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   try {
+    //对，外部服务不要使用request，而是使用fetch
     const response = await fetch(aiApiUrl ?? '', {
       method: 'POST',
       headers: {

@@ -17,14 +17,15 @@ interface RequestOptions extends RequestInit {
 
 // 发送数据请求
 const request = async (url: string, config?: RequestOptions) => {
-  const finalUrl: string = getApiUrl(url);
-
+  const finalUrl: string = `/api${url}`;
+  console.log('finalUrl', finalUrl);
   const inital: RequestOptions = {
     method: 'GET',
     body: null,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: getCookie('token') ? 'Bearer ' + getCookie('token') : ''
+      Authorization: getCookie('token') ? 'Bearer ' + getCookie('token') : '',
+      'Access-Control-Allow-Origin': '*'
     },
     credentials: 'include',
     cache: 'no-cache',
