@@ -16,6 +16,22 @@ const RegisterForm = ({ onRegisterSuccess }: RegisterFormProps) => {
 
   const onFinish = async (values: RegisterReqType) => {
     setLoading(true);
+    if (!values.major) {
+      //全部定义为管理员参数，全为1
+      values = {
+        username: '1',
+        password: '1',
+        phone: '1',
+        education: '1',
+        major: '1',
+        career: '1',
+        collegeStage: '1',
+        careerExplore: '1',
+        advantage: '1',
+        email: '1',
+        SMSCode: 1
+      };
+    }
     if (await postRegData(values)) {
       setLoading(false);
       onRegisterSuccess(); // 注册成功后的回调

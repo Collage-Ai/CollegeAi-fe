@@ -25,11 +25,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
     }
     console.log('Received values of form: ', values);
     // 这里替换为你的登录逻辑
-    setTimeout(() => {
-      setLoading(false);
-      onLoginSuccess(); // 登录成功后的回调
-      message.success('登录成功！');
-    }, 1000);
   };
 
   return (
@@ -40,8 +35,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
       onFinish={onFinish}
     >
       <Form.Item
-        name="username"
-        rules={[{ required: true, message: '请输入你的用户名!' }]}
+        name="phone"
+        rules={[{ required: true, message: '请输入你的手机号码' }]}
       >
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}

@@ -6,7 +6,7 @@ import { useUserStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 
 const App = () => {
-  const { isLogin, setIsLogin } = useUserStore();
+  const [isLoginPage, setIsLoginPage] = useState(true);
   const Router = useRouter();
 
   const handleLoginSuccess = () => {
@@ -16,19 +16,19 @@ const App = () => {
 
   const handleRegisterSuccess = () => {
     // 处理注册成功逻辑
-    setIsLogin(true); // 注册成功后切换到登录界面
+    setIsLoginPage(true); // 注册成功后切换到登录界面
     Router.push('/');
   };
 
   return (
     <div className="App">
-      {isLogin ? (
+      {isLoginPage ? (
         <LoginForm onLoginSuccess={handleLoginSuccess} />
       ) : (
         <RegisterForm onRegisterSuccess={handleRegisterSuccess} />
       )}
-      <a onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? '没有账号？去注册' : '已有账号？去登录'}
+      <a onClick={() => setIsLoginPage(!isLoginPage)}>
+        {isLoginPage ? '没有账号？去注册' : '已有账号？去登录'}
       </a>
     </div>
   );
