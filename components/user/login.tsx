@@ -19,6 +19,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
     const res = await postLoginData(values);
     if (res) {
       setUser(res);
+      console.log(res);
       setLoading(false);
       onLoginSuccess(); // 登录成功后的回调
       message.success('登录成功！');

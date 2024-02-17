@@ -2,6 +2,7 @@ import { LoginReqType, LoginResType, RegisterReqType } from '@/types/api';
 import request from './request';
 import { MessageArgs, UserBaseInfo } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
+import { deleteCookie, getCookie, setCookie } from './cookie';
 
 // utils/fetcher.ts
 export const fetcher = (url: string) => request(url).then((res) => res.json());
@@ -42,19 +43,19 @@ export const postRegData = async (data: UserBaseInfo): Promise<boolean> => {
 
 export const postLoginData = async (data: LoginReqType) => {
   try {
-    const res = await request('/login', {
+    const res: LoginResType = await request('/user/login', {
       method: 'POST',
       body: JSON.stringify(data)
     });
-    if (res.ok) {
-      return res.json().then((data: LoginResType) => {
-        if (data.code === 200) {
-          localStorage.setItem('token', data.data?.token ?? ''); // 登录成功，保存 token
-          return data.data?.userBaseInfo;
-        }
-        return false;
-      });
+
+    if (res.msg === 'success') {
+      if (getCookie('token')) {
+        deleteCookie('token');
+      }
+      setCookie('token', res.data?.token ?? '');
+      return res.data?.userInfo;
     }
+
     return false;
   } catch (err) {
     console.error(err);
@@ -74,7 +75,7 @@ export const sendMsgToServer = async (
   try {
     const res = await request('/chat/storeMessage', {
       method: 'POST',
-      body: JSON.stringify({ messageArgs })
+      body: JSON.stringify(messageArgs)
     });
     if (res.ok) {
       return true;

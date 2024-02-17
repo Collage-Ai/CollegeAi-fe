@@ -17,6 +17,7 @@ const ChatComponent: React.FC = () => {
   //更新聊天记录，并发送消息到服务器
   const updateChatList = (msg: MessageArgs) => {
     setChatList((currentChatList: MessageArgs[]) => [...currentChatList, msg]);
+    console.log(user?.id);
     sendMsgToServer(msg);
   };
 

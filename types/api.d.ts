@@ -2,11 +2,11 @@ import { UserBaseInfo } from './user';
 export type LoginResType = {
   data?: {
     token: string;
-    userBaseInfo: UserBaseInfo;
-    expire: string;
+    userInfo: UserBaseInfo;
+    expire?: string;
   };
-  code: number;
-  message: string;
+  statusCode: number;
+  msg: string;
 };
 
 export type LoginReqType = {
