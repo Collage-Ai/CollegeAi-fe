@@ -1,4 +1,4 @@
-import { LoginReqType, LoginResType } from '@/types/api';
+import { LoginReqType, LoginResType, RegisterReqType } from '@/types/api';
 import request from './request';
 import { MessageArgs, UserBaseInfo } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
@@ -75,6 +75,50 @@ export const sendMsgToServer = async (
     const res = await request('/chat/storeMessage', {
       method: 'POST',
       body: JSON.stringify({ messageArgs })
+    });
+    if (res.ok) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+/**
+ * 发送用户注册信息到服务器
+ * @param {RegisterReqType} data 用户注册信息
+ * @returns {Promise<boolean>} 是否发送成功
+ */
+export const sendRegInfoToServer = async (
+  data: RegisterReqType
+): Promise<boolean> => {
+  try {
+    const res = await request('/user/register', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+    if (res.ok) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+/**
+ * 获取短信验证码
+ * @param {string} phone 手机号
+ * @returns {Promise<boolean>} 是否发送成功
+ */
+export const getSMSCode = async (phone: string): Promise<boolean> => {
+  try {
+    const res = await request('/user/sendCode', {
+      method: 'POST',
+      body: JSON.stringify({ phone })
     });
     if (res.ok) {
       return true;

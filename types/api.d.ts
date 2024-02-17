@@ -23,4 +23,6 @@ export interface ResType {
   message: string;
 }
 
-export type RegisterReqType = UserBaseInfo;
+export type RegisterReqType = UserBaseInfo & {
+  SMSCode: number;
+};
