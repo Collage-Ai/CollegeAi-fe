@@ -10,9 +10,6 @@ export type LoginResType = {
 };
 
 export type LoginReqType = {
-  // message: string;
-  // sig: string;
-  // address: string;
   phone: string;
   password: string;
 };

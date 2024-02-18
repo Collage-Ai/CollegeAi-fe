@@ -24,6 +24,7 @@ export type UserBaseInfo = {
 
 export type MessageArgs = {
   userId: number | undefined;
-  message: string;
-  sender: 'user' | 'ai';
+  aiMsg: string;
+  userMsg: string;
+  time?: string;
 };
