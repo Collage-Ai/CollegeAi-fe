@@ -6,7 +6,6 @@ import { Card, Flex, Input } from 'antd';
 import useSWR from 'swr';
 import { Provider } from 'use-socket.io-hooks';
 export default function Page() {
-  //const { data } = useSWR('/api/user', fetcher);
   return (
     <>
       <div className="flex flex-col items-center justify-center">

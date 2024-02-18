@@ -1,19 +1,18 @@
 // components/ChatComponent.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Flex, Input } from 'antd';
 import { MessageArgs } from '../../types/user';
 import { useChatStore, useUserStore } from '@/store/userStore';
-import { sendMsgToServer } from '@/utils/fetcher';
+import { getChatHistory, sendMsgToServer } from '@/utils/fetcher';
 import { getAIResponse } from '@/utils/ai';
 import MessageItem from './chatMessage';
 import SelectPrompt from '../selectPrompt';
 import ModalCategory from '../modal/modalCategory';
 import { useStateCallback } from '@/utils/hook';
-import { set } from 'nprogress';
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState('');
-  const { chatList, setChatList } = useChatStore();
+  const { chatList, setChatList, replaceChatList } = useChatStore();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAiValue, setSelectedAiValue] = useState('');
   const [selectValue, setSelectValue] = useStateCallback('请选择');
@@ -29,19 +28,11 @@ const ChatComponent: React.FC = () => {
   const updateChatList = async (msg: MessageArgs) => {
     //先查找是否有相同的userMsg，如果有，则使用新的消息替换掉旧的消息
     const data = await sendMsgToServer(msg);
-    // const index = chatList.findIndex((item) => item.userMsg === msg.userMsg);
-    // if (index !== -1) {
-    //   setChatList((currentChatList: MessageArgs[]) => {
-    //     currentChatList[index] = msg;
-    //     return currentChatList;
-    //   });
-    // } else {
     if (data)
       setChatList((currentChatList: MessageArgs[]) => [
         ...currentChatList,
         data
       ]);
-    //}
   };
 
   const sendMsgToGetAIResponse = (msg: MessageArgs) => {
@@ -86,6 +77,15 @@ const ChatComponent: React.FC = () => {
     updateChatList(msg);
     setOpen(false);
   };
+
+  const setChatHistory = async () => {
+    const data = await getChatHistory();
+    replaceChatList(data);
+  };
+
+  useEffect(() => {
+    setChatHistory();
+  });
 
   return (
     <div className="flex h-full w-[40vw] flex-col">

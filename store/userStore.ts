@@ -21,6 +21,7 @@ export const useUserStore = create<UserState>((set) => ({
 interface ChatState {
   chatList: MessageArgs[];
   setChatList: (fn: (currentList: MessageArgs[]) => MessageArgs[]) => void;
+  replaceChatList: (newList: MessageArgs[]) => void;
 }
 
 export const useChatStore = create<ChatState>((set) => ({
@@ -35,5 +36,7 @@ export const useChatStore = create<ChatState>((set) => ({
   ],
   // 允许setChatList接受一个函数，该函数基于当前chatList计算新的chatList
   setChatList: (fn: (currentList: MessageArgs[]) => MessageArgs[]) =>
-    set((state) => ({ chatList: fn(state.chatList) }))
+    set((state) => ({ chatList: fn(state.chatList) })),
+  //完全替换chatList
+  replaceChatList: (newList: MessageArgs[]) => set({ chatList: newList })
 }));

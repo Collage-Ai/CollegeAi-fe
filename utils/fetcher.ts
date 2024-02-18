@@ -138,8 +138,8 @@ export const getSMSCode = async (phone: string): Promise<boolean> => {
 export const getChatHistory = async (): Promise<MessageArgs[]> => {
   try {
     const res = await request('/chat/getMessages');
-    if (res.ok) {
-      return res.json().then((data: any) => data.data);
+    if (res.msg === 'success') {
+      return res.data;
     }
     return [];
   } catch (err) {
