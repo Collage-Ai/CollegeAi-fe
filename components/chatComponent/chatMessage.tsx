@@ -1,8 +1,6 @@
 // components/MessageItem.tsx
 import React from 'react';
-import { MessageArgs } from '../../types/user';
-import { OpenAIOutlined, UserOutlined } from '@ant-design/icons';
-import TypewriterEffect from '../typeWriter';
+import { OpenAIOutlined } from '@ant-design/icons';
 import MarkdonwIt from 'markdown-it';
 import { Spin } from 'antd';
 

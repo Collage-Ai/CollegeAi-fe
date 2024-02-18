@@ -23,8 +23,10 @@ export type UserBaseInfo = {
 };
 
 export type MessageArgs = {
+  id?: number;
   userId: number | undefined;
   aiMsg: string;
   userMsg: string;
   time?: string;
+  category?: number;
 };
