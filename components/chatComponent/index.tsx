@@ -9,38 +9,39 @@ import MessageItem from './chatMessage';
 import SelectPrompt from '../selectPrompt';
 import ModalCategory from '../modal/modalCategory';
 import { useStateCallback } from '@/utils/hook';
+import { set } from 'nprogress';
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const { chatList, setChatList } = useChatStore();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAiValue, setSelectedAiValue] = useState('');
-  const [selectValue, setSelectValue] = useState('请选择');
+  const [selectValue, setSelectValue] = useStateCallback('请选择');
   const [category, setCategory] = useStateCallback([]); // 用于存储归档的类别
   const [open, setOpen] = useState(false);
   const { user } = useUserStore();
 
-  const handleSelectChange = (value: string) => {
+  const handleSelectValue = (value: string) => {
+    setSelectValue(value);
     setSelectedAiValue(value);
   };
-
-  //更新聊天记录，并发送消息到服务器
-  const updateChatList = (msg: MessageArgs) => {
+  //更新聊天记录，并发送消息到服务器 todo:筛选发送后端的消息
+  const updateChatList = async (msg: MessageArgs) => {
     //先查找是否有相同的userMsg，如果有，则使用新的消息替换掉旧的消息
-    const index = chatList.findIndex((item) => item.userMsg === msg.userMsg);
-    if (index !== -1) {
-      setChatList((currentChatList: MessageArgs[]) => {
-        currentChatList[index] = msg;
-        return currentChatList;
-      });
-    } else {
+    const data = await sendMsgToServer(msg);
+    // const index = chatList.findIndex((item) => item.userMsg === msg.userMsg);
+    // if (index !== -1) {
+    //   setChatList((currentChatList: MessageArgs[]) => {
+    //     currentChatList[index] = msg;
+    //     return currentChatList;
+    //   });
+    // } else {
+    if (data)
       setChatList((currentChatList: MessageArgs[]) => [
         ...currentChatList,
-        msg
+        data
       ]);
-    }
-    setChatList((currentChatList: MessageArgs[]) => [...currentChatList, msg]);
-    sendMsgToServer(msg);
+    //}
   };
 
   const sendMsgToGetAIResponse = (msg: MessageArgs) => {
@@ -50,7 +51,7 @@ const ChatComponent: React.FC = () => {
       .then((res) => {
         msg.aiMsg = res;
         updateChatList(msg);
-        handleSelectChange(res);
+        setSelectedAiValue(res);
       })
       .finally(() => {
         setIsLoading(false); // 无论请求成功还是失败，都将加载状态设置回false
@@ -72,13 +73,18 @@ const ChatComponent: React.FC = () => {
 
   //重新发送消息
   const reSendMessage = () => {
-    //查找chatList中最后一个消息
     const lastMsg = chatList[chatList.length - 1];
     if (lastMsg) {
-      //删除最后一个消息
-      console.log('lastMsg', lastMsg);
       sendMsgToGetAIResponse(lastMsg);
     }
+  };
+
+  const setChatCategory = () => {
+    //设置当前消息的类别
+    const msg = chatList[chatList.length - 1];
+    msg.category = Number(category[1]);
+    updateChatList(msg);
+    setOpen(false);
   };
 
   return (
@@ -86,7 +92,7 @@ const ChatComponent: React.FC = () => {
       <ModalCategory
         open={open}
         onOk={() => {
-          setOpen(false);
+          setChatCategory();
         }}
         onCancel={() => {
           setOpen(false);
@@ -96,7 +102,7 @@ const ChatComponent: React.FC = () => {
       />
       <SelectPrompt
         item={chatList}
-        onSelectChange={handleSelectChange}
+        onSelectChange={handleSelectValue}
         value={selectValue}
       />
       <div className="flex-1 overflow-auto">

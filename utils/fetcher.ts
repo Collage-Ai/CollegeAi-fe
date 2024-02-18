@@ -71,19 +71,19 @@ export const postLoginData = async (data: LoginReqType) => {
  * */
 export const sendMsgToServer = async (
   messageArgs: MessageArgs
-): Promise<boolean> => {
+): Promise<MessageArgs | null> => {
   try {
-    const res = await request('/chat/storeMessage', {
+    const res = await request('/chat/updateMessage', {
       method: 'POST',
       body: JSON.stringify(messageArgs)
     });
-    if (res.ok) {
-      return true;
+    if (res.msg === 'success') {
+      return res.data;
     }
-    return false;
+    return null;
   } catch (err) {
     console.error(err);
-    return false;
+    return null;
   }
 };
 

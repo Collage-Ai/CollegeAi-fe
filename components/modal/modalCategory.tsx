@@ -81,6 +81,7 @@ const ModalCategory: React.FC<ModalCategoryProps> = ({
 }: ModalCategoryProps) => {
   // 为 Cascader 组件定义 onChange 事件处理函数
   const onChange = (newValue: (string | number)[]) => {
+    console.log(newValue);
     setValue(newValue);
   };
 
