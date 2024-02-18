@@ -4,15 +4,21 @@ import { MessageArgs } from '../../types/user';
 import { OpenAIOutlined, UserOutlined } from '@ant-design/icons';
 import TypewriterEffect from '../typeWriter';
 import MarkdonwIt from 'markdown-it';
+import { Spin } from 'antd';
 
 interface MessageItemProps {
   message: string;
+  isLoading: boolean;
 }
 
 //仅用于展示Ai消息
-const MessageItem: React.FC<MessageItemProps> = ({ message }) => {
+const MessageItem: React.FC<MessageItemProps> = ({ message, isLoading }) => {
   const md = new MarkdonwIt();
   const html = md.render(message);
+
+  if (isLoading) {
+    return <Spin />;
+  }
 
   return (
     <div className={`'justify-start' flex space-y-2`}>

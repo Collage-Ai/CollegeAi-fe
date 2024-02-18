@@ -63,7 +63,7 @@ const ChatComponent: React.FC = () => {
         renderItem={(item) => <MessageItem message={item} />}
       /> */}
       <div className="flex-1 overflow-auto">
-        <MessageItem message={selectedAiValue} />
+        <MessageItem message={selectedAiValue} isLoading={isLoading} />
       </div>
       <div className="flex p-4">
         <Input
