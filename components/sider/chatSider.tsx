@@ -67,13 +67,6 @@ const ChatSider: React.FC<{
           onClick: () => {
             router.push('/login');
           }
-        },
-        {
-          key: '1-4',
-          label: '新兴技术',
-          onClick: () => {
-            router.push('/login');
-          }
         }
       ]
     },

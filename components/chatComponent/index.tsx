@@ -1,13 +1,14 @@
 // components/ChatComponent.tsx
-import React, { useEffect, useState } from 'react';
-import { Button, Flex, Input, List, message } from 'antd';
+import React, { useState } from 'react';
+import { Button, Flex, Input } from 'antd';
 import { MessageArgs } from '../../types/user';
 import { useChatStore, useUserStore } from '@/store/userStore';
 import { sendMsgToServer } from '@/utils/fetcher';
 import { getAIResponse } from '@/utils/ai';
 import MessageItem from './chatMessage';
-import { set } from 'nprogress';
 import SelectPrompt from '../selectPrompt';
+import ModalCategory from '../modal/modalCategory';
+import { useStateCallback } from '@/utils/hook';
 
 const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState('');
@@ -15,6 +16,8 @@ const ChatComponent: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAiValue, setSelectedAiValue] = useState('');
   const [selectValue, setSelectValue] = useState('请选择');
+  const [category, setCategory] = useStateCallback([]); // 用于存储归档的类别
+  const [open, setOpen] = useState(false);
   const { user } = useUserStore();
 
   const handleSelectChange = (value: string) => {
@@ -80,16 +83,22 @@ const ChatComponent: React.FC = () => {
 
   return (
     <div className="flex h-full w-[40vw] flex-col">
+      <ModalCategory
+        open={open}
+        onOk={() => {
+          setOpen(false);
+        }}
+        onCancel={() => {
+          setOpen(false);
+        }}
+        value={category}
+        setValue={setCategory}
+      />
       <SelectPrompt
         item={chatList}
         onSelectChange={handleSelectChange}
         value={selectValue}
       />
-      {/* <List
-        className="flex-1 overflow-auto"
-        dataSource={chatList}
-        renderItem={(item) => <MessageItem message={item} />}
-      /> */}
       <div className="flex-1 overflow-auto">
         <MessageItem message={selectedAiValue} isLoading={isLoading} />
       </div>
@@ -97,7 +106,7 @@ const ChatComponent: React.FC = () => {
         <Button type="primary" onClick={reSendMessage}>
           重新生成
         </Button>
-        <Button type="primary" onClick={sendMessage}>
+        <Button type="primary" onClick={() => setOpen(true)}>
           归档
         </Button>
         <Button type="primary" onClick={sendMessage} disabled>
