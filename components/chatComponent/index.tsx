@@ -40,16 +40,12 @@ const ChatComponent: React.FC = () => {
     sendMsgToServer(msg);
   };
 
-  const sendMsgToGetAIResponse = (msg: string) => {
+  const sendMsgToGetAIResponse = (msg: MessageArgs) => {
     setIsLoading((isLoading) => !isLoading);
-    setSelectValue(message);
-    getAIResponse(msg)
+    setSelectValue(msg.userMsg);
+    getAIResponse(msg.userMsg)
       .then((res) => {
-        const msg: MessageArgs = {
-          userId: user?.id,
-          aiMsg: res,
-          userMsg: message
-        };
+        msg.aiMsg = res;
         updateChatList(msg);
         handleSelectChange(res);
       })
@@ -62,7 +58,12 @@ const ChatComponent: React.FC = () => {
   const sendMessage = () => {
     if (message) {
       setMessage(''); // 清空输入框
-      sendMsgToGetAIResponse(message);
+      const msg: MessageArgs = {
+        userId: user?.id,
+        aiMsg: '',
+        userMsg: message
+      };
+      sendMsgToGetAIResponse(msg);
     }
   };
 
@@ -73,7 +74,7 @@ const ChatComponent: React.FC = () => {
     if (lastMsg) {
       //删除最后一个消息
       console.log('lastMsg', lastMsg);
-      sendMsgToGetAIResponse(lastMsg.userMsg);
+      sendMsgToGetAIResponse(lastMsg);
     }
   };
 
