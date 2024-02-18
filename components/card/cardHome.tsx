@@ -11,7 +11,7 @@ const imgStyle: React.CSSProperties = {
   width: '20vw'
 };
 
-const Card1: React.FC = () => (
+const CardHome: React.FC = () => (
   <Card
     hoverable
     style={cardStyle}
@@ -40,4 +40,4 @@ const Card1: React.FC = () => (
   </Card>
 );
 
-export default Card1;
+export default CardHome;

@@ -20,13 +20,16 @@ export const useUserStore = create<UserState>((set) => ({
 //存储聊天记录
 interface ChatState {
   chatList: MessageArgs[];
+  chatCategoryList: MessageArgs[];
+  displayCategory: number;
   setChatList: (fn: (currentList: MessageArgs[]) => MessageArgs[]) => void;
   replaceChatList: (newList: MessageArgs[]) => void;
+  setChatCategoryList: (list: MessageArgs[]) => void;
+  setDisplayCategory: (category: number) => void;
 }
 
 export const useChatStore = create<ChatState>((set) => ({
   chatList: [
-    // 初始聊天记录为空
     {
       userId: 0,
       aiMsg: '你好，我是AI助手，有什么可以帮助你的吗？',
@@ -34,9 +37,13 @@ export const useChatStore = create<ChatState>((set) => ({
       time: '2021-09-12 12:00:00'
     }
   ],
+  chatCategoryList: [],
   // 允许setChatList接受一个函数，该函数基于当前chatList计算新的chatList
   setChatList: (fn: (currentList: MessageArgs[]) => MessageArgs[]) =>
     set((state) => ({ chatList: fn(state.chatList) })),
   //完全替换chatList
-  replaceChatList: (newList: MessageArgs[]) => set({ chatList: newList })
+  replaceChatList: (newList: MessageArgs[]) => set({ chatList: newList }),
+  setChatCategoryList: (list) => set({ chatCategoryList: list }),
+  displayCategory: -1,
+  setDisplayCategory: (category) => set({ displayCategory: category })
 }));

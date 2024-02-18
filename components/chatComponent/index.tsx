@@ -26,13 +26,21 @@ const ChatComponent: React.FC = () => {
   };
   //更新聊天记录，并发送消息到服务器 todo:筛选发送后端的消息
   const updateChatList = async (msg: MessageArgs) => {
-    //先查找是否有相同的userMsg，如果有，则使用新的消息替换掉旧的消息
     const data = await sendMsgToServer(msg);
-    if (data)
-      setChatList((currentChatList: MessageArgs[]) => [
-        ...currentChatList,
-        data
-      ]);
+    if (data) {
+      //先查找是否有相同的userMsg，如果有，则使用新的消息替换掉旧的消息
+      const index = chatList.findIndex((item) => item.userMsg === data.userMsg);
+      if (index !== -1) {
+        setChatList((currentChatList: MessageArgs[]) => {
+          currentChatList[index] = data;
+          return currentChatList;
+        });
+      } else
+        setChatList((currentChatList: MessageArgs[]) => [
+          ...currentChatList,
+          data
+        ]);
+    }
   };
 
   const sendMsgToGetAIResponse = (msg: MessageArgs) => {
@@ -85,7 +93,7 @@ const ChatComponent: React.FC = () => {
 
   useEffect(() => {
     setChatHistory();
-  });
+  }, []);
 
   return (
     <div className="flex h-full w-[40vw] flex-col">

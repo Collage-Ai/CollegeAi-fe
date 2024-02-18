@@ -3,201 +3,153 @@ import React from 'react';
 import { Layout, Menu, MenuProps } from 'antd';
 import { LaptopOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
+import { useChatStore } from '@/store/userStore';
 
 const { Sider } = Layout;
 
 const ChatSider: React.FC<{
   style?: React.CSSProperties;
 }> = ({ style }) => {
-  const router = useRouter();
+  const { chatList, setChatCategoryList, setDisplayCategory } = useChatStore();
   const items: MenuProps['items'] = [
     //子菜单
     {
-      key: '1',
+      key: 'a',
       label: '行业概览',
       icon: <LaptopOutlined />,
       children: [
         {
-          key: '1-1',
-          label: '定义与范围',
-          onClick: () => {
-            // 跳转到/insights
-            router.push('/insights');
-          }
+          key: '1',
+          label: '定义与范围'
         },
         {
-          key: '1-2',
-          label: '历史发展',
-          onClick: () => {
-            // 跳转到/skills
-            router.push('/skills');
-          }
+          key: '2',
+          label: '历史发展'
         },
         {
-          key: '1-3',
-          label: '当前状态',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '3',
+          label: '当前状态'
         }
       ]
     },
     {
-      key: '2',
+      key: 'b',
       label: '市场分析',
       icon: <LaptopOutlined />,
       children: [
         {
-          key: '2-1',
-          label: '主要参与者',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '4',
+          label: '主要参与者'
         },
         {
-          key: '2-2',
-          label: '增长领域',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '5',
+          label: '增长领域'
         },
         {
-          key: '2-3',
-          label: '消费者需求',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '6',
+          label: '消费者需求'
         }
       ]
     },
     {
-      key: '3',
+      key: 'c',
       label: '技术趋势',
       icon: <LaptopOutlined />,
       children: [
         {
-          key: '3-1',
-          label: '新兴技术',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '7',
+          label: '新兴技术'
         },
         {
-          key: '3-2',
-          label: '技术应用',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '8',
+          label: '技术应用'
         }
       ]
     },
     {
-      key: '4',
+      key: 'd',
       label: '职业机会与发展',
       icon: <LaptopOutlined />,
       children: [
         {
-          key: '4-1',
-          label: '典型职位',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '9',
+          label: '典型职位'
         },
         {
-          key: '4-2',
-          label: '技能需求',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '10',
+          label: '技能需求'
         },
         {
-          key: '4-3',
-          label: '薪酬范围',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '11',
+          label: '薪酬范围'
         }
       ]
     },
     {
-      key: '5',
+      key: 'e',
       label: '工作环境与文化',
       icon: <LaptopOutlined />,
       children: [
         {
-          key: '5-1',
-          label: '工作强度',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '12',
+          label: '工作强度'
         },
         {
-          key: '5-2',
-          label: '职业满意度',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '13',
+          label: '职业满意度'
         },
         {
-          key: '5-3',
-          label: '文化与价值观',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '14',
+          label: '文化与价值观'
         }
       ]
     },
     {
-      key: '6',
+      key: 'f',
       label: '法规与政策',
       icon: <LaptopOutlined />,
       children: [
         {
-          key: '6-1',
-          label: '行业法规',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '15',
+          label: '行业法规'
         },
         {
-          key: '6-2',
-          label: '政策支持',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '16',
+          label: '政策支持'
         }
       ]
     },
     {
-      key: '7',
+      key: 'g',
       label: '国际视角',
       icon: <LaptopOutlined />,
       children: [
         {
-          key: '7-1',
-          label: '全球市场影响',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '17',
+          label: '全球市场影响'
         },
         {
-          key: '7-2',
-          label: '跨国公司作用',
-          onClick: () => {
-            router.push('/login');
-          }
+          key: '18',
+          label: '跨国公司作用'
         }
       ]
     }
   ];
+  //根据所选item的key值对chatList进行筛选,并将筛选后的结果存入chatCategoryList
+  const setChatCategory = (key: string) => {
+    const category = chatList.filter((item) => item.category === Number(key));
+    setChatCategoryList(category);
+    setDisplayCategory(Number(key));
+  };
   return (
     <Sider style={style}>
       <Menu
         mode="inline"
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
         style={{ height: '100%', borderRight: 0 }}
         items={items}
+        onClick={({ key }) => {
+          setChatCategory(key);
+        }}
       />
     </Sider>
   );

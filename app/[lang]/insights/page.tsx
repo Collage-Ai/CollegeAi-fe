@@ -1,11 +1,14 @@
 'use client';
 import ChatComponent from '@/components/chatComponent';
+import DisplayComponent from '@/components/displayComponent';
 import ChatSider from '@/components/sider/chatSider';
+import { useChatStore } from '@/store/userStore';
 import { fetcher } from '@/utils/fetcher';
 import { Card, Flex, Input } from 'antd';
 import useSWR from 'swr';
 import { Provider } from 'use-socket.io-hooks';
 export default function Page() {
+  const { displayCategory } = useChatStore();
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -15,7 +18,7 @@ export default function Page() {
             <ChatSider />
           </Card>
           <Card>
-            <ChatComponent />
+            {displayCategory === -1 ? <ChatComponent /> : <DisplayComponent />}
           </Card>
           <Card title="最新行业信息"></Card>
         </Flex>
