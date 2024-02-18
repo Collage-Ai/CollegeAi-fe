@@ -13,11 +13,12 @@ const ChatComponent: React.FC = () => {
   const [message, setMessage] = useState('');
   const { chatList, setChatList } = useChatStore();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedValue, setSelectedValue] = useState('');
+  const [selectedAiValue, setSelectedAiValue] = useState('');
+  const [selectValue, setSelectValue] = useState('请选择');
   const { user } = useUserStore();
 
   const handleSelectChange = (value: string) => {
-    setSelectedValue(value);
+    setSelectedAiValue(value);
   };
 
   //更新聊天记录，并发送消息到服务器
@@ -32,7 +33,7 @@ const ChatComponent: React.FC = () => {
     if (message) {
       setIsLoading((isLoading) => !isLoading);
       setMessage(''); // 清空输入框
-
+      setSelectValue(message);
       getAIResponse(message)
         .then((res) => {
           const msg: MessageArgs = {
@@ -41,6 +42,7 @@ const ChatComponent: React.FC = () => {
             userMsg: message
           };
           updateChatList(msg);
+          handleSelectChange(res);
         })
         .finally(() => {
           setIsLoading(false); // 无论请求成功还是失败，都将加载状态设置回false
@@ -50,14 +52,18 @@ const ChatComponent: React.FC = () => {
 
   return (
     <div className="flex h-full w-[40vw] flex-col">
-      <SelectPrompt item={chatList} onSelectChange={handleSelectChange} />
+      <SelectPrompt
+        item={chatList}
+        onSelectChange={handleSelectChange}
+        value={selectValue}
+      />
       {/* <List
         className="flex-1 overflow-auto"
         dataSource={chatList}
         renderItem={(item) => <MessageItem message={item} />}
       /> */}
       <div className="flex-1 overflow-auto">
-        <MessageItem message={selectedValue} />
+        <MessageItem message={selectedAiValue} />
       </div>
       <div className="flex p-4">
         <Input
