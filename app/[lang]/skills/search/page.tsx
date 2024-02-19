@@ -8,18 +8,7 @@ import { Card, Flex } from 'antd';
 export default function Page() {
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
-        <h1>资源速配</h1>
-        <Flex>
-          <Card title="我的任务">
-            <SkillSider />
-          </Card>
-          <Card>
-            <ChatComponent />
-          </Card>
-          <Card title="最新资源"></Card>
-        </Flex>
-      </div>
+      <ChatComponent type="skill" />
     </>
   );
 }

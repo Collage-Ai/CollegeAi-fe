@@ -13,16 +13,9 @@ const Page: React.FC = () => {
   const item = router.query.item as unknown as SkillArgs;
   return (
     <div>
-      <h1>你的专属行业洞察</h1>
-      <div>
-        <Card title="基本信息">
-          <SkillSider />
-        </Card>
-        <Card>
-          <SkillDisplayComponent skill={item} />
-        </Card>
-        <Card title="最新行业信息"></Card>
-      </div>
+      <Card>
+        <SkillDisplayComponent skill={item} />
+      </Card>
     </div>
   );
 };

@@ -5,13 +5,13 @@ import SkillComponent from '@/components/skillComponent';
 import { Row } from 'antd';
 import { useState } from 'react';
 export default function Page() {
-  //const { data } = useSWR('/api/user', fetcher);
   const [showOverlay, setShowOverlay] = useState(false);
   const onInputFinish = (value: string) => {
     console.log(value);
   };
   return (
-    <div className="flex flex-col">
+    <>
+      <SkillComponent />
       {showOverlay ? (
         <div
           onClick={() => setShowOverlay(false)}
@@ -20,16 +20,11 @@ export default function Page() {
       ) : (
         <div className="fixed inset-0 z-[-1] bg-gray-500 opacity-0 transition-opacity duration-300 ease-in-out" />
       )}
-      <h1>资源速配</h1>
-      <Row justify="center" gutter={16} wrap={false}>
-        <SkillSider />
-        <SkillComponent />
-        <HoverInput
-          onFinish={onInputFinish}
-          showOverlay={showOverlay}
-          setShowOverlay={setShowOverlay}
-        />
-      </Row>
-    </div>
+      <HoverInput
+        onFinish={onInputFinish}
+        showOverlay={showOverlay}
+        setShowOverlay={setShowOverlay}
+      />
+    </>
   );
 }

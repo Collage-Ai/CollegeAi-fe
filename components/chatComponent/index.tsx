@@ -10,7 +10,7 @@ import SelectPrompt from '../selectPrompt';
 import ModalCategory from '../modal/modalCategory';
 import { useStateCallback } from '@/utils/hook';
 
-const ChatComponent: React.FC = () => {
+const ChatComponent = ({ type }: { type: 'insight' | 'skill' }) => {
   const [message, setMessage] = useState('');
   const { chatList, setChatList, replaceChatList } = useChatStore();
   const [isLoading, setIsLoading] = useState(false);
@@ -64,7 +64,8 @@ const ChatComponent: React.FC = () => {
       const msg: MessageArgs = {
         userId: user?.id,
         aiMsg: '',
-        userMsg: message
+        userMsg: message,
+        type: type as 'insight' | 'skill'
       };
       sendMsgToGetAIResponse(msg);
     }
@@ -110,7 +111,7 @@ const ChatComponent: React.FC = () => {
         type="chat"
       />
       <SelectPrompt
-        item={chatList}
+        item={chatList.filter((item) => item.type === type)}
         onSelectChange={handleSelectValue}
         value={selectValue}
       />

@@ -15,7 +15,11 @@ export default function Page() {
             <ChatSider />
           </Card>
           <Card>
-            {displayCategory === -1 ? <ChatComponent /> : <DisplayComponent />}
+            {displayCategory === -1 ? (
+              <ChatComponent type="insight" />
+            ) : (
+              <DisplayComponent />
+            )}
           </Card>
           <Card title="最新行业信息"></Card>
         </Flex>

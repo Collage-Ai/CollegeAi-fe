@@ -29,4 +29,5 @@ export type MessageArgs = {
   userMsg: string;
   time?: string;
   category?: number;
+  type: 'insight' | 'skill';
 };

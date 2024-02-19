@@ -36,7 +36,8 @@ export const useChatStore = create<ChatState>((set) => ({
       userId: 0,
       aiMsg: '你好，我是AI助手，有什么可以帮助你的吗？',
       userMsg: '我有一个问题',
-      time: '2021-09-12 12:00:00'
+      time: '2021-09-12 12:00:00',
+      type: 'insight'
     }
   ],
   chatCategoryList: [],
