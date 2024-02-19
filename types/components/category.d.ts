@@ -3,4 +3,5 @@ export type categoryArgs = {
   userId: number;
   type: string;
   categoryText: string;
+  bigCategory?: string;
 };

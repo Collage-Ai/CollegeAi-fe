@@ -26,7 +26,7 @@ const HoverInput = ({ onFinish, setShowOverlay, showOverlay }: InputProps) => {
   };
 
   return (
-    <div className={`absolute ${showOverlay ? 'z-10' : ''} bottom-4`}>
+    <div className={`absolute ${showOverlay ? 'z-10' : ''} bottom-4 flex p-10`}>
       {/* {showOverlay && (
         <div className="absolute inset-0 size-full bg-gray-500 opacity-50" />
       )} */}
