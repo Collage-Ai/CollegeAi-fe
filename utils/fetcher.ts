@@ -3,6 +3,7 @@ import request from './request';
 import { MessageArgs, UserBaseInfo } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
 import { deleteCookie, getCookie, setCookie } from './cookie';
+import { SkillArgs } from '@/types/components/skill';
 
 // utils/fetcher.ts
 export const fetcher = (url: string) => request(url).then((res) => res.json());
@@ -148,5 +149,46 @@ export const getChatHistory = async (): Promise<MessageArgs[]> => {
   } catch (err) {
     console.error(err);
     return [];
+  }
+};
+
+/**
+ * 获取技能列表
+ * @param {number} userId 用户id
+ * @returns {Promise<SkillArgs[]>} 技能列表
+ */
+export const getSkillList = async (userId: number): Promise<SkillArgs[]> => {
+  try {
+    const res = await request(`/skill?id=${userId}`);
+    if (res.msg === 'success') {
+      return res.data;
+    }
+    return [];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+
+/**
+ * 发送技能信息到服务器
+ * @param {SkillArgs} data 技能信息
+ * @returns {Promise<boolean>} 是否发送成功
+ * */
+export const sendSkillInfoToServer = async (
+  data: SkillArgs
+): Promise<boolean> => {
+  try {
+    const res = await request('/skill', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+    if (res.msg === 'success') {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
   }
 };
