@@ -4,6 +4,7 @@ import { MessageArgs, UserBaseInfo } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
 import { deleteCookie, getCookie, setCookie } from './cookie';
 import { SkillArgs } from '@/types/components/skill';
+import { categoryArgs } from '@/types/components/category';
 
 // utils/fetcher.ts
 export const fetcher = (url: string) => request(url).then((res) => res.json());
@@ -180,6 +181,47 @@ export const sendSkillInfoToServer = async (
 ): Promise<boolean> => {
   try {
     const res = await request('/skill', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    });
+    if (res.msg === 'success') {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};
+
+/**
+ * 获取类型列表
+ * @param {number} userId 用户id
+ * @returns {Promise<categoryArgs[]>} 类型列表
+ * */
+export const getCategoryList = async (): Promise<categoryArgs[]> => {
+  try {
+    const res = await request(`/category/${useUserStore.getState().user?.id}`);
+    if (res.msg === 'success') {
+      return res.data;
+    }
+    return [];
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+
+/**
+ * 发送类型信息到服务器
+ * @param {categoryArgs} data 类型信息
+ * @returns {Promise<boolean>} 是否发送成功
+ * */
+export const sendCategoryInfoToServer = async (
+  data: categoryArgs
+): Promise<boolean> => {
+  try {
+    const res = await request('/category', {
       method: 'POST',
       body: JSON.stringify(data)
     });

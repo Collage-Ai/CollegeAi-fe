@@ -12,22 +12,25 @@ const SkillComponent: React.FC = () => {
   const [skillList2, setSkillList2] = useStateCallback([]);
   const [skillList3, setSkillList3] = useStateCallback([]);
 
-  useEffect(() => {
-    getSkillList().then((res) => {
-      setSkillList(res);
-      // 在数据设置后进行筛选
-      setInternshipList(res.filter((item) => item.type === '实习'));
-      setSkillList1(res.filter((item) => item.type === '技能点1'));
-      setSkillList2(res.filter((item) => item.type === '技能点2'));
-      setSkillList3(res.filter((item) => item.type === '技能点3'));
-    });
-  }, [
-    setInternshipList,
-    // setSkillList,
-    setSkillList1,
-    setSkillList2,
-    setSkillList3
-  ]);
+  useEffect(
+    () => {
+      getSkillList().then((res) => {
+        setSkillList(res);
+        // 在数据设置后进行筛选
+        setInternshipList(res.filter((item) => item.type === '实习'));
+        setSkillList1(res.filter((item) => item.type === '技能点1'));
+        setSkillList2(res.filter((item) => item.type === '技能点2'));
+        setSkillList3(res.filter((item) => item.type === '技能点3'));
+      });
+    },
+    [
+      // setInternshipList,
+      // //setSkillList,
+      // setSkillList1,
+      // setSkillList2,
+      // setSkillList3
+    ]
+  );
 
   return (
     <div>
