@@ -65,7 +65,7 @@ const ChatComponent = ({ type }: { type: 'insight' | 'skill' }) => {
         userId: user?.id,
         aiMsg: '',
         userMsg: message,
-        type: type as 'insight' | 'skill'
+        type: type
       };
       sendMsgToGetAIResponse(msg);
     }
