@@ -1,3 +1,4 @@
+// app/components/SkillSider.tsx
 import React from 'react';
 import { Layout, Menu, MenuProps } from 'antd';
 import { LaptopOutlined } from '@ant-design/icons';
@@ -6,10 +7,10 @@ import { useChatStore } from '@/store/userStore';
 
 const { Sider } = Layout;
 
-const ChatSider: React.FC<{
+const SkillSider: React.FC<{
   style?: React.CSSProperties;
 }> = ({ style }) => {
-  const { chatList, setChatCategoryList, setDisplayCategory } = useChatStore();
+  //const { chatList, setChatCategoryList, setDisplayCategory } = useChatStore();
   const items: MenuProps['items'] = [
     //子菜单
     {
@@ -135,23 +136,23 @@ const ChatSider: React.FC<{
     }
   ];
   //根据所选item的key值对chatList进行筛选,并将筛选后的结果存入chatCategoryList
-  const setChatCategory = (key: string) => {
-    const category = chatList.filter((item) => item.category === Number(key));
-    setChatCategoryList(category);
-    setDisplayCategory(Number(key));
-  };
+  // const setChatCategory = (key: string) => {
+  //   const category = chatList.filter((item) => item.category === Number(key));
+  //   setChatCategoryList(category);
+  //   setDisplayCategory(Number(key));
+  // };
   return (
     <Sider style={style}>
       <Menu
         mode="inline"
         style={{ height: '100%', borderRight: 0 }}
         items={items}
-        onClick={({ key }) => {
-          setChatCategory(key);
-        }}
+        // onClick={({ key }) => {
+        //   setChatCategory(key);
+        // }}
       />
     </Sider>
   );
 };
 
-export default ChatSider;
+export default SkillSider;
