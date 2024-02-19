@@ -3,6 +3,6 @@ export type SkillArgs = {
   userId: number;
   title: string;
   description: string;
-  type?: string;
-  category: number;
+  type?: string; //首页技能分类
+  category: number; //是否归档
 };
