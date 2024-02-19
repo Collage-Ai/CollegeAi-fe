@@ -1,5 +1,6 @@
 import React, { use, useEffect, useState } from 'react';
 import { Button, Cascader, Modal } from 'antd';
+import { categoryArgs } from '@/types/components/category';
 
 type ModalCategoryProps = {
   open: boolean;
@@ -7,9 +8,17 @@ type ModalCategoryProps = {
   onCancel: () => void;
   value: (string | number)[];
   setValue: (value: (string | number)[]) => void;
+  type: 'chat' | 'skill';
+  skillOptions?: categoryArgs[];
 };
 
-const options = [
+type option = {
+  value: string | number;
+  label: string;
+  children?: option[];
+};
+
+const chatOptions: option[] = [
   {
     value: 'a',
     label: '行业概览',
@@ -77,14 +86,29 @@ const ModalCategory: React.FC<ModalCategoryProps> = ({
   onOk,
   onCancel,
   value,
-  setValue
+  setValue,
+  type,
+  skillOptions
 }: ModalCategoryProps) => {
+  let options: option[] = [];
   // 为 Cascader 组件定义 onChange 事件处理函数
   const onChange = (newValue: (string | number)[]) => {
     console.log(newValue);
     setValue(newValue);
   };
-
+  const categoryToOption = (category: categoryArgs[]): option[] => {
+    return category.map((item) => {
+      return {
+        value: item.id ?? item.categoryText,
+        label: item.categoryText
+      };
+    });
+  };
+  if (type === 'chat') {
+    options = chatOptions;
+  } else if (type === 'skill') {
+    options = categoryToOption(skillOptions ?? []);
+  }
   return (
     <>
       <Modal

@@ -1,5 +1,5 @@
 import { SkillArgs } from '@/types/components/skill';
-import { Card, Typography } from 'antd';
+import { Button, Card, Flex, Typography } from 'antd';
 import PropTypes from 'prop-types';
 
 type SkillDisplayComponentProps = {
@@ -12,6 +12,9 @@ const SkillDisplayComponent: React.FC<SkillDisplayComponentProps> = ({
   return (
     <Card title={skill.title}>
       <Typography.Text>{skill.description}</Typography.Text>
+      <Flex>
+        <Button type="primary">归档</Button>
+      </Flex>
     </Card>
   );
 };

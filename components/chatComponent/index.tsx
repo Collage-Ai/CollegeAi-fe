@@ -107,6 +107,7 @@ const ChatComponent: React.FC = () => {
         }}
         value={category}
         setValue={setCategory}
+        type="chat"
       />
       <SelectPrompt
         item={chatList}
