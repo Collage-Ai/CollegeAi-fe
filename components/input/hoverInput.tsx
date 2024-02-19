@@ -25,19 +25,18 @@ const HoverInput = ({ onFinish, setShowOverlay, showOverlay }: InputProps) => {
 
   return (
     <div className={`absolute ${showOverlay ? 'z-10' : ''} bottom-4`}>
-      {showOverlay && (
+      {/* {showOverlay && (
         <div className="absolute inset-0 size-full bg-gray-500 opacity-50" />
-      )}
+      )} */}
       <Input
         value={value}
         onChange={handleChange}
         onPressEnter={handlePressEnter}
-        onMouseEnter={() => setShowOverlay(true)}
-        onMouseLeave={() => setShowOverlay(false)}
+        onFocus={() => setShowOverlay(true)}
+        //onMouseLeave={() => setShowOverlay(false)}
         className={`transition-all duration-300 ease-in-out ${
           showOverlay ? 'scale-105' : ''
         }`}
-        style={{ backgroundColor: showOverlay ? 'lightgray' : 'white' }}
       />
     </div>
   );
