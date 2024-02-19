@@ -157,9 +157,9 @@ export const getChatHistory = async (): Promise<MessageArgs[]> => {
  * @param {number} userId 用户id
  * @returns {Promise<SkillArgs[]>} 技能列表
  */
-export const getSkillList = async (userId: number): Promise<SkillArgs[]> => {
+export const getSkillList = async (): Promise<SkillArgs[]> => {
   try {
-    const res = await request(`/skill?id=${userId}`);
+    const res = await request(`/skill?id=${useUserStore.getState().user?.id}`);
     if (res.msg === 'success') {
       return res.data;
     }

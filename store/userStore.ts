@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { MessageArgs, UserBaseInfo } from '../types/user';
+import { SkillArgs } from '@/types/components/skill';
 
 interface UserState {
   user: UserBaseInfo | null;
@@ -46,4 +47,14 @@ export const useChatStore = create<ChatState>((set) => ({
   setChatCategoryList: (list) => set({ chatCategoryList: list }),
   displayCategory: -1,
   setDisplayCategory: (category) => set({ displayCategory: category })
+}));
+
+interface SkillState {
+  skillList: SkillArgs[];
+  setSkillList: (list: SkillArgs[]) => void;
+}
+
+export const useSkillStore = create<SkillState>((set) => ({
+  skillList: [],
+  setSkillList: (list) => set({ skillList: list })
 }));
