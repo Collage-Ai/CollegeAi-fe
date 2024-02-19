@@ -23,7 +23,7 @@ const SkillComponent: React.FC = () => {
     });
   }, [
     setInternshipList,
-    setSkillList,
+    // setSkillList,
     setSkillList1,
     setSkillList2,
     setSkillList3

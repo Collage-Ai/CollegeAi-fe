@@ -159,7 +159,7 @@ export const getChatHistory = async (): Promise<MessageArgs[]> => {
  */
 export const getSkillList = async (): Promise<SkillArgs[]> => {
   try {
-    const res = await request(`/skill?id=${useUserStore.getState().user?.id}`);
+    const res = await request(`/skill/${useUserStore.getState().user?.id}`);
     if (res.msg === 'success') {
       return res.data;
     }
