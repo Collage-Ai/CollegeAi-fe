@@ -1,5 +1,5 @@
 'use client';
-import { Input } from 'antd';
+import { Button, Input } from 'antd';
 import { useState } from 'react';
 
 type InputProps = {
@@ -10,6 +10,7 @@ type InputProps = {
 
 const HoverInput = ({ onFinish, setShowOverlay, showOverlay }: InputProps) => {
   const [value, setValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   // 处理输入变化
   const handleChange = (e: any) => {
@@ -21,6 +22,7 @@ const HoverInput = ({ onFinish, setShowOverlay, showOverlay }: InputProps) => {
     onFinish(value); // 触发回调
     setValue(''); // 清空输入框
     setShowOverlay(false); // 隐藏输入框
+    setIsLoading(true);
   };
 
   return (
@@ -38,6 +40,13 @@ const HoverInput = ({ onFinish, setShowOverlay, showOverlay }: InputProps) => {
           showOverlay ? 'scale-105' : ''
         }`}
       />
+      {isLoading ? (
+        <Button type="dashed">加载中</Button>
+      ) : (
+        <Button type="primary" onClick={handlePressEnter}>
+          发送
+        </Button>
+      )}
     </div>
   );
 };

@@ -136,9 +136,7 @@ const ChatComponent: React.FC = () => {
           onPressEnter={sendMessage}
         />
         {isLoading ? (
-          <Button type="dashed" onClick={sendMessage}>
-            加载中
-          </Button>
+          <Button type="dashed">加载中</Button>
         ) : (
           <Button type="primary" onClick={sendMessage}>
             发送
