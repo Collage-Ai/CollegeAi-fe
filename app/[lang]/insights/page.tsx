@@ -3,10 +3,7 @@ import ChatComponent from '@/components/chatComponent';
 import DisplayComponent from '@/components/displayComponent';
 import ChatSider from '@/components/sider/chatSider';
 import { useChatStore } from '@/store/userStore';
-import { fetcher } from '@/utils/fetcher';
-import { Card, Flex, Input } from 'antd';
-import useSWR from 'swr';
-import { Provider } from 'use-socket.io-hooks';
+import { Card, Flex } from 'antd';
 export default function Page() {
   const { displayCategory } = useChatStore();
   return (
