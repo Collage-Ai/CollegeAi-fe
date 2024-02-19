@@ -4,7 +4,7 @@ import { MessageArgs, UserBaseInfo } from '@/types/user';
 import { useUserStore } from '@/store/userStore';
 import { deleteCookie, getCookie, setCookie } from './cookie';
 import { SkillArgs } from '@/types/components/skill';
-import { categoryArgs } from '@/types/components/category';
+import { CategoryArgs } from '@/types/components/category';
 
 // utils/fetcher.ts
 export const fetcher = (url: string) => request(url).then((res) => res.json());
@@ -197,9 +197,9 @@ export const sendSkillInfoToServer = async (
 /**
  * 获取类型列表
  * @param {number} userId 用户id
- * @returns {Promise<categoryArgs[]>} 类型列表
+ * @returns {Promise<CategoryArgs[]>} 类型列表
  * */
-export const getCategoryList = async (): Promise<categoryArgs[]> => {
+export const getCategoryList = async (): Promise<CategoryArgs[]> => {
   try {
     const res = await request(`/category/${useUserStore.getState().user?.id}`);
     if (res.msg === 'success') {
@@ -218,9 +218,14 @@ export const getCategoryList = async (): Promise<categoryArgs[]> => {
  * @returns {Promise<boolean>} 是否发送成功
  * */
 export const sendCategoryInfoToServer = async (
-  data: categoryArgs
+  text: string
 ): Promise<boolean> => {
   try {
+    const data: CategoryArgs = {
+      userId: useUserStore.getState().user?.id ?? 0,
+      type: 'chat',
+      categoryText: text
+    };
     const res = await request('/category', {
       method: 'POST',
       body: JSON.stringify(data)

@@ -2,11 +2,13 @@
 import React, { useState } from 'react';
 import LoginForm from '@/components/user/login';
 import RegisterForm from '@/components/user/register';
-import { useUserStore } from '@/store/userStore';
+import { useCategoryStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
+import { getCategoryList } from '@/utils/fetcher';
 
 const App = () => {
   const [isLoginPage, setIsLoginPage] = useState(true);
+  const { setCategoryList } = useCategoryStore();
   const Router = useRouter();
 
   const handleLoginSuccess = () => {
@@ -16,6 +18,9 @@ const App = () => {
 
   const handleRegisterSuccess = () => {
     // 处理注册成功逻辑
+    getCategoryList().then((res) => {
+      setCategoryList(res);
+    });
     setIsLoginPage(true); // 注册成功后切换到登录界面
     Router.push('/');
   };

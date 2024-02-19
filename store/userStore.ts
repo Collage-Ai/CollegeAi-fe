@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { MessageArgs, UserBaseInfo } from '../types/user';
 import { SkillArgs } from '@/types/components/skill';
+import { CategoryArgs } from '@/types/components/category';
 
 interface UserState {
   user: UserBaseInfo | null;
@@ -57,4 +58,14 @@ interface SkillState {
 export const useSkillStore = create<SkillState>((set) => ({
   skillList: [],
   setSkillList: (list) => set({ skillList: list })
+}));
+
+interface CategoryState {
+  categoryList: CategoryArgs[];
+  setCategoryList: (list: CategoryArgs[]) => void;
+}
+
+export const useCategoryStore = create<CategoryState>((set) => ({
+  categoryList: [],
+  setCategoryList: (list) => set({ categoryList: list })
 }));

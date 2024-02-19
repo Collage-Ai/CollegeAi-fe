@@ -1,6 +1,9 @@
 import React, { use, useEffect, useState } from 'react';
-import { Button, Cascader, Modal } from 'antd';
-import { categoryArgs } from '@/types/components/category';
+import { Button, Cascader, Input, Modal } from 'antd';
+import { useStateCallback } from '@/utils/hook';
+import { getCategoryList, sendCategoryInfoToServer } from '@/utils/fetcher';
+import { useCategoryStore } from '@/store/userStore';
+import { CategoryArgs } from '@/types/components/category';
 
 type ModalCategoryProps = {
   open: boolean;
@@ -9,7 +12,7 @@ type ModalCategoryProps = {
   value: (string | number)[];
   setValue: (value: (string | number)[]) => void;
   type: 'chat' | 'skill';
-  skillOptions?: categoryArgs[];
+  skillOptions?: CategoryArgs[];
 };
 
 type option = {
@@ -91,17 +94,33 @@ const ModalCategory: React.FC<ModalCategoryProps> = ({
   skillOptions
 }: ModalCategoryProps) => {
   let options: option[] = [];
-  // 为 Cascader 组件定义 onChange 事件处理函数
+  const [categoryText, setCategoryText] = useStateCallback('');
+  const [isAddCategory, setIsAddCategory] = useStateCallback(false);
+  const { setCategoryList } = useCategoryStore();
+
   const onChange = (newValue: (string | number)[]) => {
     console.log(newValue);
     setValue(newValue);
   };
-  const categoryToOption = (category: categoryArgs[]): option[] => {
+  const categoryToOption = (category: CategoryArgs[]): option[] => {
     return category.map((item) => {
       return {
         value: item.id ?? item.categoryText,
         label: item.categoryText
       };
+    });
+  };
+  const addCategory = () => {
+    // 添加类别
+    setIsAddCategory(false);
+    // 发送请求
+    sendCategoryInfoToServer(categoryText).then((res) => {
+      if (res) {
+        //添加成功后，重新获取类别列表
+        getCategoryList().then((list) => {
+          setCategoryList(list);
+        });
+      }
     });
   };
   if (type === 'chat') {
@@ -125,6 +144,18 @@ const ModalCategory: React.FC<ModalCategoryProps> = ({
           onChange={onChange} // 使用定义的 onChange 函数
           placeholder="请选择归档类别"
         />
+        {type === 'skill' && (
+          <Button type="primary" onClick={() => setIsAddCategory(true)}>
+            新增类别
+          </Button>
+        )}
+        <Modal open={isAddCategory} onOk={addCategory}>
+          <Input
+            placeholder="请输入新类别"
+            value={categoryText}
+            onChange={(e) => setCategoryText(e.target.value)}
+          />
+        </Modal>
       </Modal>
     </>
   );
