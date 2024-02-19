@@ -180,14 +180,27 @@ export const sendSkillInfoToServer = async (
   data: SkillArgs
 ): Promise<boolean> => {
   try {
-    const res = await request('/skill', {
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-    if (res.msg === 'success') {
-      return true;
+    //如果有id则为更新，否则为新增
+    if (data.id) {
+      //更新技能
+      const res = await request(`/skill/${data.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(data)
+      });
+      if (res.msg === 'success') {
+        return true;
+      }
+      return false;
+    } else {
+      const res = await request('/skill', {
+        method: 'POST',
+        body: JSON.stringify(data)
+      });
+      if (res.msg === 'success') {
+        return true;
+      }
+      return false;
     }
-    return false;
   } catch (err) {
     console.error(err);
     return false;

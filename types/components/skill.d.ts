@@ -4,5 +4,5 @@ export type SkillArgs = {
   title: string;
   description: string;
   type?: string;
-  category?: number;
+  category: number;
 };
