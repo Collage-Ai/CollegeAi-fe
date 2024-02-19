@@ -4,6 +4,7 @@ import { useSkillStore } from '@/store/userStore';
 import { getSkillList } from '@/utils/fetcher';
 import { useStateCallback } from '@/utils/hook';
 import { SkillArgs } from '@/types/components/skill';
+import CardSkillItem from '../card/cardSkillItem';
 
 const SkillComponent: React.FC = () => {
   const { setSkillList } = useSkillStore();
@@ -40,9 +41,7 @@ const SkillComponent: React.FC = () => {
             <Card title="实习">
               <List
                 dataSource={internshipList}
-                renderItem={(item: SkillArgs) => (
-                  <List.Item>{item.title}</List.Item>
-                )}
+                renderItem={(item: SkillArgs) => <CardSkillItem item={item} />}
               />
             </Card>
           </Col>
@@ -50,9 +49,7 @@ const SkillComponent: React.FC = () => {
             <Card title="技能点1">
               <List
                 dataSource={skillList1}
-                renderItem={(item: SkillArgs) => (
-                  <List.Item>{item.title}</List.Item>
-                )}
+                renderItem={(item: SkillArgs) => <CardSkillItem item={item} />}
               />
             </Card>
           </Col>
@@ -60,9 +57,7 @@ const SkillComponent: React.FC = () => {
             <Card title="技能点2">
               <List
                 dataSource={skillList2}
-                renderItem={(item: SkillArgs) => (
-                  <List.Item>{item.title}</List.Item>
-                )}
+                renderItem={(item: SkillArgs) => <CardSkillItem item={item} />}
               />
             </Card>
           </Col>
@@ -70,9 +65,7 @@ const SkillComponent: React.FC = () => {
             <Card title="技能点3">
               <List
                 dataSource={skillList3}
-                renderItem={(item: SkillArgs) => (
-                  <List.Item>{item.title}</List.Item>
-                )}
+                renderItem={(item: SkillArgs) => <CardSkillItem item={item} />}
               />
             </Card>
           </Col>
