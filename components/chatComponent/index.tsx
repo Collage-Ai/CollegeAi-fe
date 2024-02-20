@@ -10,7 +10,12 @@ import SelectPrompt from '../selectPrompt';
 import ModalCategory from '../modal/modalCategory';
 import { useStateCallback } from '@/utils/hook';
 
-const ChatComponent = ({ type }: { type: 'insight' | 'skill' }) => {
+type ChatComponentProps = {
+  type: 'insight' | 'skill';
+  search?: string;
+};
+
+const ChatComponent = ({ type, search }: ChatComponentProps) => {
   const [message, setMessage] = useState('');
   const { chatList, setChatList, replaceChatList } = useChatStore();
   const [isLoading, setIsLoading] = useState(false);
@@ -25,37 +30,45 @@ const ChatComponent = ({ type }: { type: 'insight' | 'skill' }) => {
     setSelectedAiValue(value);
   };
   //更新聊天记录，并发送消息到服务器 todo:筛选发送后端的消息
-  const updateChatList = async (msg: MessageArgs) => {
-    const data = await sendMsgToServer(msg);
-    if (data) {
-      //先查找是否有相同的userMsg，如果有，则使用新的消息替换掉旧的消息
-      const index = chatList.findIndex((item) => item.userMsg === data.userMsg);
-      if (index !== -1) {
-        setChatList((currentChatList: MessageArgs[]) => {
-          currentChatList[index] = data;
-          return currentChatList;
-        });
-      } else
-        setChatList((currentChatList: MessageArgs[]) => [
-          ...currentChatList,
-          data
-        ]);
-    }
-  };
+  const updateChatList = useCallback(
+    async (msg: MessageArgs) => {
+      const data = await sendMsgToServer(msg);
+      if (data) {
+        //先查找是否有相同的userMsg，如果有，则使用新的消息替换掉旧的消息
+        const index = chatList.findIndex(
+          (item) => item.userMsg === data.userMsg
+        );
+        if (index !== -1) {
+          setChatList((currentChatList: MessageArgs[]) => {
+            currentChatList[index] = data;
+            return currentChatList;
+          });
+        } else
+          setChatList((currentChatList: MessageArgs[]) => [
+            ...currentChatList,
+            data
+          ]);
+      }
+    },
+    [chatList, setChatList]
+  );
 
-  const sendMsgToGetAIResponse = (msg: MessageArgs) => {
-    setIsLoading((isLoading) => !isLoading);
-    setSelectValue(msg.userMsg);
-    getAIResponse(msg.userMsg)
-      .then((res) => {
-        msg.aiMsg = res;
-        updateChatList(msg);
-        setSelectedAiValue(res);
-      })
-      .finally(() => {
-        setIsLoading(false); // 无论请求成功还是失败，都将加载状态设置回false
-      });
-  };
+  const sendMsgToGetAIResponse = useCallback(
+    (msg: MessageArgs) => {
+      setIsLoading((isLoading) => !isLoading);
+      setSelectValue(msg.userMsg);
+      getAIResponse(msg.userMsg)
+        .then((res) => {
+          msg.aiMsg = res;
+          updateChatList(msg);
+          setSelectedAiValue(res);
+        })
+        .finally(() => {
+          setIsLoading(false); // 无论请求成功还是失败，都将加载状态设置回false
+        });
+    },
+    [setSelectValue, updateChatList]
+  );
 
   //当用户发送消息时，请求ai回答，并将消息显示在聊天框中，同时将消息发送到服务器
   const sendMessage = () => {
@@ -98,6 +111,18 @@ const ChatComponent = ({ type }: { type: 'insight' | 'skill' }) => {
   useEffect(() => {
     setChatHistory();
   }, [setChatHistory]);
+
+  useEffect(() => {
+    if (search) {
+      const msg: MessageArgs = {
+        userId: user?.id,
+        aiMsg: '',
+        userMsg: search,
+        type: type
+      };
+      sendMsgToGetAIResponse(msg);
+    }
+  }, [search, sendMsgToGetAIResponse, type, user]);
 
   return (
     <div className="flex h-full w-[40vw] flex-col">

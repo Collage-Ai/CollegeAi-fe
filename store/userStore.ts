@@ -56,13 +56,17 @@ interface SkillState {
   skillDisplayItem: SkillArgs | null;
   setSkillList: (list: SkillArgs[]) => void;
   setSkillDisplayItem: (item: SkillArgs) => void;
+  searchPrompt: string;
+  setSearchPrompt: (prompt: string) => void;
 }
 
 export const useSkillStore = create<SkillState>((set) => ({
   skillList: [],
   setSkillList: (list) => set({ skillList: list }),
   skillDisplayItem: null,
-  setSkillDisplayItem: (item) => set({ skillDisplayItem: item })
+  setSkillDisplayItem: (item) => set({ skillDisplayItem: item }),
+  searchPrompt: '',
+  setSearchPrompt: (prompt) => set({ searchPrompt: prompt })
 }));
 
 interface CategoryState {

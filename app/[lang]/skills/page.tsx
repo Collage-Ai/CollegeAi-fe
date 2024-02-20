@@ -1,11 +1,17 @@
 'use client';
 import HoverInput from '@/components/input/hoverInput';
 import SkillComponent from '@/components/skillComponent';
+import { useSkillStore } from '@/store/userStore';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
 export default function Page() {
   const [showOverlay, setShowOverlay] = useState(false);
+  const Router = useRouter();
+  const { setSearchPrompt } = useSkillStore();
   const onInputFinish = (value: string) => {
-    console.log(value);
+    setSearchPrompt(value);
+    Router.push('/skills/search');
   };
   return (
     <>
