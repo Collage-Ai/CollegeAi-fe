@@ -33,7 +33,7 @@ export const postRegData = async (data: UserBaseInfo): Promise<boolean> => {
       method: 'POST',
       body: JSON.stringify(data)
     });
-    if (res.ok) {
+    if (res.msg === 'success') {
       return true;
     }
     return false;
@@ -43,19 +43,21 @@ export const postRegData = async (data: UserBaseInfo): Promise<boolean> => {
   }
 };
 
-export const postLoginData = async (data: LoginReqType) => {
+export const postLoginData = async (
+  data: LoginReqType
+): Promise<UserBaseInfo | false> => {
   try {
     const res: LoginResType = await request('/user/login', {
       method: 'POST',
       body: JSON.stringify(data)
     });
 
-    if (res.msg === 'success') {
+    if (res.msg === 'success' && res.data?.token) {
       if (getCookie('token')) {
         deleteCookie('token');
       }
       setCookie('token', res.data?.token ?? '');
-      return res.data?.userInfo;
+      return res.data?.userInfo ?? false;
     }
 
     return false;

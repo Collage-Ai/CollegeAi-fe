@@ -14,14 +14,15 @@ const App = () => {
 
   const handleLoginSuccess = () => {
     // 处理登录成功逻辑，如跳转到主页
+    getCategoryList().then((res) => {
+      setCategoryList(res);
+    });
     Router.push('/');
   };
 
   const handleRegisterSuccess = () => {
     // 处理注册成功逻辑
-    getCategoryList().then((res) => {
-      setCategoryList(res);
-    });
+
     setIsLoginPage(true); // 注册成功后切换到登录界面
     //Router.push('/');
   };

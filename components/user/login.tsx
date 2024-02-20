@@ -5,6 +5,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginReqType, LoginResType } from '@/types/api';
 import { postLoginData } from '@/utils/fetcher';
 import { useUserStore } from '@/store/userStore';
+import { UserBaseInfo } from '@/types/user';
 
 type LoginFormProps = {
   onLoginSuccess: () => void;
@@ -16,16 +17,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
 
   const onFinish = async (values: LoginReqType) => {
     setLoading(true);
-    const res = await postLoginData(values);
-    if (res) {
-      setUser(res);
-      console.log(res);
-      setLoading(false);
-      onLoginSuccess(); // 登录成功后的回调
-      message.success('登录成功！');
-    }
-    console.log('Received values of form: ', values);
-    // 这里替换为你的登录逻辑
+    postLoginData(values).then((res: UserBaseInfo | false) => {
+      if (res) {
+        setLoading(false);
+        message.success('登录成功！');
+        setUser(res);
+        onLoginSuccess(); // 登录成功后的回调
+      } else {
+        setLoading(false);
+        message.error('登录失败！');
+      }
+    });
   };
 
   return (
