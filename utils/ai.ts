@@ -1,4 +1,4 @@
-export async function getAIResponse(message: string) {
+export async function aIResponse(message: string) {
   const aiApiUrl = process.env.NEXT_PUBLIC_API_URL;
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -35,3 +35,19 @@ export async function getAIResponse(message: string) {
     throw new Error('Unable to get response from AI service');
   }
 }
+type ThrottleFunction = (...args: any[]) => void;
+
+function throttle(func: ThrottleFunction, limit: number) {
+  let inThrottle = false;
+  return function (this: any, ...args: any[]) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => {
+        inThrottle = false;
+      }, limit);
+    }
+  };
+}
+
+export const getAIResponse = throttle(aIResponse, 1000);
