@@ -5,8 +5,19 @@ import ChatSider from '@/components/sider/chatSider';
 import { useChatStore } from '@/store/userStore';
 import { CloseOutlined } from '@ant-design/icons';
 import { Card, Flex } from 'antd';
+import React from 'react';
+import { animated, useTransition } from 'react-spring';
+
 export default function Page() {
   const { displayCategory, setDisplayCategory } = useChatStore();
+
+  // 为 DisplayComponent 创建过渡动画
+  const transitions = useTransition(displayCategory !== -1, {
+    from: { opacity: 0, transform: 'translateX(100%)' },
+    enter: { opacity: 1, transform: 'translateX(0%)' },
+    leave: { opacity: 0, transform: 'translateX(-100%)' }
+  });
+
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -15,20 +26,23 @@ export default function Page() {
           <Card title="基本信息">
             <ChatSider />
           </Card>
-          <Card
-            extra={
-              displayCategory !== -1 && (
-                <CloseOutlined onClick={() => setDisplayCategory(-1)} />
+          {transitions(
+            (style, item) =>
+              item && (
+                <animated.div style={style}>
+                  <Card
+                    extra={
+                      <CloseOutlined onClick={() => setDisplayCategory(-1)} />
+                    }
+                  >
+                    <DisplayComponent />
+                  </Card>
+                </animated.div>
               )
-            }
-          >
-            {displayCategory === -1 ? (
-              <ChatComponent type="insight" />
-            ) : (
-              <DisplayComponent />
-            )}
+          )}
+          <Card>
+            <ChatComponent type="insight" />
           </Card>
-          <Card title="最新行业信息"></Card>
         </Flex>
       </div>
     </>
