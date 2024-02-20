@@ -1,6 +1,6 @@
 'use client';
-import React, { useState } from 'react';
-import { Button, Form, Input, message, Radio, Typography } from 'antd';
+import React from 'react';
+import { Button, Form, Input, Typography } from 'antd';
 import { LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import { RegisterReqType } from '@/types/api';
 import { postRegData } from '@/utils/fetcher';

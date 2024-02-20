@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { LoginReqType, LoginResType } from '@/types/api';
+import { LoginReqType } from '@/types/api';
 import { postLoginData } from '@/utils/fetcher';
 import { useUserStore } from '@/store/userStore';
 import { UserBaseInfo } from '@/types/user';

@@ -1,7 +1,6 @@
 import { useChatStore } from '@/store/userStore';
-import { FloatButton, List } from 'antd';
+import { List } from 'antd';
 import CardInsight from '../card/cardInsight';
-import { OpenAIOutlined } from '@ant-design/icons';
 
 // type DisplayComponentProps = {
 
@@ -9,7 +8,6 @@ import { OpenAIOutlined } from '@ant-design/icons';
 
 const DisplayComponent: React.FC = () => {
   const { chatCategoryList, displayCategory } = useChatStore();
-  console.log(chatCategoryList);
   return (
     <div>
       <h1>{displayCategory}</h1>

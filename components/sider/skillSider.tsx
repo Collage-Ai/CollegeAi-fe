@@ -3,7 +3,6 @@ import React from 'react';
 import { Layout, Menu, MenuProps } from 'antd';
 import { useSkillStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
-import { Typography } from 'antd';
 
 const { Sider } = Layout;
 
