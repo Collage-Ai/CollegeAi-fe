@@ -129,6 +129,7 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
         userMsg: search,
         type: type
       };
+      setIsLoading(true);
       sendMsgToGetAIResponse(msg);
     }
   }, []);
