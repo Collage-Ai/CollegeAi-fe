@@ -1,3 +1,4 @@
+'use client';
 import SkillDisplayComponent from '@/components/skillComponent/skillDisplayComponent';
 import { Card } from 'antd';
 

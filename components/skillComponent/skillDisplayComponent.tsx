@@ -1,3 +1,4 @@
+'use client';
 import { SkillArgs } from '@/types/components/skill';
 import { Button, Card, Flex, Typography } from 'antd';
 import PropTypes from 'prop-types';

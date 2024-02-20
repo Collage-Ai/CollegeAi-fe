@@ -2,7 +2,7 @@
 import React from 'react';
 import { Layout, Menu, MenuProps } from 'antd';
 import { useSkillStore } from '@/store/userStore';
-import Router from 'next/router';
+import { useRouter } from 'next/navigation';
 import { Typography } from 'antd';
 
 const { Sider } = Layout;
@@ -10,9 +10,9 @@ const { Sider } = Layout;
 const SkillSider: React.FC<{
   style?: React.CSSProperties;
 }> = ({ style }) => {
-  const { skillList } = useSkillStore();
+  const { skillList, setSkillDisplayItem } = useSkillStore();
   const items: MenuProps['items'] = [];
-  //console.log('skillList:', skillList);
+  const Router = useRouter();
   skillList
     .filter((skill) => skill.category === 1) // Fix: Added missing return statement in the filter callback.
     .map((skill) => {
@@ -20,12 +20,8 @@ const SkillSider: React.FC<{
         key: skill.id ?? skill.title,
         label: skill.title,
         onClick: () => {
-          if (typeof window !== 'undefined') {
-            Router.push({
-              pathname: '/skill/detail',
-              query: { item: JSON.stringify(skill) }
-            });
-          }
+          setSkillDisplayItem(skill);
+          Router.push('/skills/detail');
         }
       });
     });

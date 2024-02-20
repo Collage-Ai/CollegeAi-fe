@@ -1,5 +1,5 @@
-// components/ChatComponent.tsx
-import React, { useEffect, useState } from 'react';
+'use client';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Flex, Input } from 'antd';
 import { MessageArgs } from '../../types/user';
 import { useChatStore, useUserStore } from '@/store/userStore';
@@ -87,14 +87,17 @@ const ChatComponent = ({ type }: { type: 'insight' | 'skill' }) => {
     setOpen(false);
   };
 
-  const setChatHistory = async () => {
-    const data = await getChatHistory();
-    replaceChatList(data);
-  };
+  const setChatHistory = useCallback(() => {
+    getChatHistory().then((res) => {
+      if (res) {
+        replaceChatList(res);
+      }
+    });
+  }, [replaceChatList]);
 
   useEffect(() => {
     setChatHistory();
-  }, []);
+  }, [setChatHistory]);
 
   return (
     <div className="flex h-full w-[40vw] flex-col">

@@ -82,14 +82,26 @@ export const sendMsgToServer = async (
   messageArgs: MessageArgs
 ): Promise<MessageArgs | null> => {
   try {
-    const res = await request('/chat/updateMessage', {
-      method: 'POST',
-      body: JSON.stringify(messageArgs)
-    });
-    if (res.msg === 'success') {
-      return res.data;
+    //如果有id则为更新，否则为新增
+    if (messageArgs.id) {
+      const res = await request(`/chat`, {
+        method: 'PATCH',
+        body: JSON.stringify(messageArgs)
+      });
+      if (res.msg === 'success') {
+        return null;
+      }
+      return null;
+    } else {
+      const res = await request('/chat', {
+        method: 'POST',
+        body: JSON.stringify(messageArgs)
+      });
+      if (res.msg === 'success') {
+        return res.data;
+      }
+      return null;
     }
-    return null;
   } catch (err) {
     console.error(err);
     return null;
@@ -146,10 +158,7 @@ export const getSMSCode = async (phone: string): Promise<boolean> => {
  * */
 export const getChatHistory = async (): Promise<MessageArgs[]> => {
   try {
-    const res = await request('/chat/getMessages', {
-      method: 'POST',
-      body: JSON.stringify({ userId: useUserStore.getState().user?.id })
-    });
+    const res = await request(`/chat/${useUserStore.getState().user?.id}`);
     if (res.msg === 'success') {
       return res.data;
     }
