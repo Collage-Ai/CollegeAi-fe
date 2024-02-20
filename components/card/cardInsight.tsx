@@ -4,7 +4,7 @@ import { Button, Card, Flex, Typography } from 'antd';
 import { MessageArgs } from '@/types/user';
 
 const cardStyle: React.CSSProperties = {
-  width: '50vw'
+  //width: '50vw'
 };
 type CardInsightProps = {
   item: MessageArgs;

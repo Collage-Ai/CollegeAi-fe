@@ -6,7 +6,7 @@ import { SkillArgs } from '@/types/components/skill';
 import Router from 'next/router';
 
 const cardStyle: React.CSSProperties = {
-  width: '50vw'
+  //width: '50vw'
 };
 type CardSkillItemProps = {
   item: SkillArgs;
@@ -33,10 +33,12 @@ const CardSkillItem: React.FC<CardSkillItemProps> = ({ item }) => {
           type="primary"
           onClick={() => {
             //路由传参
-            Router.push({
-              pathname: '/skill/detail',
-              query: { item: JSON.stringify(item) }
-            });
+            if (typeof window !== 'undefined') {
+              Router.push({
+                pathname: '/skill/detail',
+                query: { item: encodeURIComponent(JSON.stringify(item)) }
+              });
+            }
           }}
         >
           Get Started

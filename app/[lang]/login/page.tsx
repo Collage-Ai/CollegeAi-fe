@@ -24,7 +24,6 @@ const App = () => {
     // 处理注册成功逻辑
 
     setIsLoginPage(true); // 注册成功后切换到登录界面
-    //Router.push('/');
   };
 
   return (

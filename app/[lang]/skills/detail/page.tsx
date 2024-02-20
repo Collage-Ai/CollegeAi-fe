@@ -6,11 +6,14 @@ import { SkillArgs } from '../../../../types/components/skill';
 const Page: React.FC = () => {
   //接收路由参数
   const router = useRouter();
-  const item = router.query.item as unknown as SkillArgs;
+  const { item } = router.query;
+  const decodedItem = item
+    ? JSON.parse(decodeURIComponent(item as string))
+    : null;
   return (
     <div>
       <Card>
-        <SkillDisplayComponent skill={item} />
+        <SkillDisplayComponent skill={decodedItem} />
       </Card>
     </div>
   );

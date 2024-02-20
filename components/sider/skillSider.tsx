@@ -12,30 +12,31 @@ const SkillSider: React.FC<{
 }> = ({ style }) => {
   const { skillList } = useSkillStore();
   const items: MenuProps['items'] = [];
+  console.log('skillList:', skillList);
   skillList
-    .filter((skill) => {
-      skill.category === 1;
-    })
+    .filter((skill) => skill.category === 1) // Fix: Added missing return statement in the filter callback.
     .map((skill) => {
       items.push({
         key: skill.id ?? skill.title,
         label: skill.title,
-        //点击跳转到对应的技能点
         onClick: () => {
-          Router.push({
-            pathname: '/skill/detail',
-            query: { item: JSON.stringify(skill) }
-          });
+          if (typeof window !== 'undefined') {
+            Router.push({
+              pathname: '/skill/detail',
+              query: { item: JSON.stringify(skill) }
+            });
+          }
         }
       });
     });
+  console.log(items);
   return (
-    <Sider>
-      <Typography.Title level={3}>我的任务</Typography.Title>
+    <Sider title="我的任务">
+      {/* <Typography.Title level={3}>我的任务</Typography.Title> */}
       {/* <h1>我的任务</h1> */}
       <Menu
         mode="inline"
-        style={{ height: '100%', borderRight: 0 }}
+        style={{ height: '100vh', borderRight: 0 }}
         items={items}
       />
     </Sider>

@@ -1,5 +1,5 @@
 import SkillSider from '@/components/sider/skillSider';
-import { Row } from 'antd';
+import { Card, Row } from 'antd';
 import React from 'react';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -8,7 +8,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="flex flex-col">
         <h1>资源速配</h1>
         <Row justify="center" gutter={16} wrap={false}>
-          <SkillSider />
+          <Card title="我的任务" style={{ width: 300 }}>
+            <SkillSider />
+          </Card>
           {children}
         </Row>
       </div>
