@@ -1,53 +1,47 @@
-export async function aIResponse(message: string) {
-  const aiApiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+let lastCallTime: number = 0;
+let debounceTimer: NodeJS.Timeout;
 
-  try {
-    //对，外部服务不要使用request，而是使用fetch
-    const response = await fetch(aiApiUrl ?? '', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`, // 使用你的OpenAI API密钥
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
-        messages: [
-          {
-            role: 'user',
-            content: message
-          }
-        ]
-      })
-    });
+export async function getAIResponse(message: string) {
+  const minimumInterval = 1000; // 设置最小请求间隔为1000毫秒
+  const currentTime = new Date().getTime();
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    return data.choices[0].message.content;
-  } catch (error: any) {
-    console.error('AI Service Error:', error);
-    if (error.code === 'invalid_api_key') {
-      throw new Error('Invalid API key');
-    }
-    throw new Error('Unable to get response from AI service');
+  // 检查距离上一次请求是否已经超过最小间隔时间
+  if (currentTime - lastCallTime < minimumInterval) {
+    throw new Error('请求过于频繁，请稍后再试');
   }
-}
-type ThrottleFunction = (...args: any[]) => void;
 
-function throttle(func: ThrottleFunction, limit: number) {
-  let inThrottle = false;
-  return function (this: any, ...args: any[]) {
-    if (!inThrottle) {
-      func.apply(this, args);
-      inThrottle = true;
-      setTimeout(() => {
-        inThrottle = false;
-      }, limit);
-    }
-  };
-}
+  // 清除之前的定时器（如果存在）
+  if (debounceTimer) clearTimeout(debounceTimer);
 
-export const getAIResponse = throttle(aIResponse, 1000);
+  return new Promise((resolve, reject) => {
+    debounceTimer = setTimeout(async () => {
+      try {
+        const aiApiUrl = process.env.NEXT_PUBLIC_API_URL;
+        const apiKey = process.env.NEXT_PUBLIC_API_KEY;
+
+        const response = await fetch(aiApiUrl ?? '', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${apiKey}`, // 使用你的OpenAI API密钥
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            model: 'gpt-3.5-turbo',
+            messages: [{ role: 'user', content: message }]
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        lastCallTime = new Date().getTime(); // 更新上一次成功请求的时间
+        resolve(data.choices[0].message.content);
+      } catch (error) {
+        console.error('AI Service Error:', error);
+        reject(error);
+      }
+    }, minimumInterval); // 设置防抖时间，与最小请求间隔相同
+  });
+}

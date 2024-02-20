@@ -32,7 +32,6 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
     userMsg: string;
     aiMsg: string;
   }) => {
-    console.log('aiMsg', aiMsg);
     setSelectValue(userMsg); //此处有问题
     setSelectedAiValue(aiMsg);
   };
@@ -66,9 +65,9 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
       setSelectValue(msg.userMsg);
       getAIResponse(msg.userMsg)
         .then((res) => {
-          msg.aiMsg = res;
+          msg.aiMsg = res as string;
           updateChatList(msg);
-          setSelectedAiValue(res);
+          setSelectedAiValue(res as string);
         })
         .finally(() => {
           setIsLoading(false); // 无论请求成功还是失败，都将加载状态设置回false
@@ -132,7 +131,7 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
       };
       sendMsgToGetAIResponse(msg);
     }
-  }, [search, sendMsgToGetAIResponse, type, user]);
+  }, []);
 
   return (
     <div className="flex h-full w-[40vw] flex-col">
