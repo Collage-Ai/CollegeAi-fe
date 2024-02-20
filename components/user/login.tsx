@@ -1,11 +1,12 @@
 'use client';
 import React, { useState } from 'react';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginReqType, LoginResType } from '@/types/api';
 import { postLoginData } from '@/utils/fetcher';
 import { useUserStore } from '@/store/userStore';
 import { UserBaseInfo } from '@/types/user';
+import toast from '../toast/toast';
 
 type LoginFormProps = {
   onLoginSuccess: () => void;
@@ -20,12 +21,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
     postLoginData(values).then((res: UserBaseInfo | false) => {
       if (res) {
         setLoading(false);
-        message.success('登录成功！');
+        toast.success('登录成功！');
         setUser(res);
         onLoginSuccess(); // 登录成功后的回调
       } else {
         setLoading(false);
-        message.error('登录失败！');
+        toast.error('登录失败！');
       }
     });
   };

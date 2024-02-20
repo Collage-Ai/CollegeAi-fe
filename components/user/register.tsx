@@ -40,7 +40,6 @@ const RegisterForm = ({ onRegisterSuccess }: RegisterFormProps) => {
         onRegisterSuccess(); // 注册成功后的回调
       } else {
         setLoading(false);
-        toast.error('注册失败！');
       }
     });
   };

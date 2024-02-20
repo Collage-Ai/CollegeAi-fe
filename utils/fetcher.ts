@@ -5,6 +5,7 @@ import { useUserStore } from '@/store/userStore';
 import { deleteCookie, getCookie, setCookie } from './cookie';
 import { SkillArgs } from '@/types/components/skill';
 import { CategoryArgs } from '@/types/components/category';
+import toast from '@/components/toast/toast';
 
 // utils/fetcher.ts
 export const fetcher = (url: string) => request(url).then((res) => res.json());
@@ -37,8 +38,12 @@ export const postRegData = async (data: UserBaseInfo): Promise<boolean> => {
       return true;
     }
     return false;
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
+    //如果400，说明用户名已存在
+    if (err.status === 400) {
+      toast.error('用户名已存在！');
+    }
     return false;
   }
 };
