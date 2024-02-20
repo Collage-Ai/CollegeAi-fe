@@ -3,9 +3,10 @@ import ChatComponent from '@/components/chatComponent';
 import DisplayComponent from '@/components/displayComponent';
 import ChatSider from '@/components/sider/chatSider';
 import { useChatStore } from '@/store/userStore';
+import { CloseOutlined } from '@ant-design/icons';
 import { Card, Flex } from 'antd';
 export default function Page() {
-  const { displayCategory } = useChatStore();
+  const { displayCategory, setDisplayCategory } = useChatStore();
   return (
     <>
       <div className="flex flex-col items-center justify-center">
@@ -14,7 +15,13 @@ export default function Page() {
           <Card title="基本信息">
             <ChatSider />
           </Card>
-          <Card>
+          <Card
+            extra={
+              displayCategory !== -1 && (
+                <CloseOutlined onClick={() => setDisplayCategory(-1)} />
+              )
+            }
+          >
             {displayCategory === -1 ? (
               <ChatComponent type="insight" />
             ) : (

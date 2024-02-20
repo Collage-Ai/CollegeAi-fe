@@ -8,8 +8,7 @@ import { OpenAIOutlined } from '@ant-design/icons';
 // };
 
 const DisplayComponent: React.FC = () => {
-  const { chatCategoryList, displayCategory, setDisplayCategory } =
-    useChatStore();
+  const { chatCategoryList, displayCategory } = useChatStore();
   console.log(chatCategoryList);
   return (
     <div>
@@ -19,12 +18,12 @@ const DisplayComponent: React.FC = () => {
         dataSource={chatCategoryList}
         renderItem={(item) => <CardInsight item={item} />}
       />
-      <FloatButton
+      {/* <FloatButton
         icon={<OpenAIOutlined />}
         type="default"
         style={{ right: 94 }}
         onClick={() => setDisplayCategory(-1)}
-      />
+      /> */}
     </div>
   );
 };
