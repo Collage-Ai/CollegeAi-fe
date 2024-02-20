@@ -5,9 +5,10 @@ import RegisterForm from '@/components/user/register';
 import { useCategoryStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { getCategoryList } from '@/utils/fetcher';
+import { useStateCallback } from '@/utils/hook';
 
 const App = () => {
-  const [isLoginPage, setIsLoginPage] = useState(true);
+  const [isLoginPage, setIsLoginPage] = useStateCallback(true);
   const { setCategoryList } = useCategoryStore();
   const Router = useRouter();
 
@@ -22,7 +23,7 @@ const App = () => {
       setCategoryList(res);
     });
     setIsLoginPage(true); // 注册成功后切换到登录界面
-    Router.push('/');
+    //Router.push('/');
   };
 
   return (
