@@ -18,7 +18,6 @@ interface RequestOptions extends RequestInit {
 // 发送数据请求
 const request = async (url: string, config?: RequestOptions) => {
   const finalUrl: string = `/api${url}`;
-  console.log('finalUrl', finalUrl);
   const inital: RequestOptions = {
     method: 'GET',
     body: null,
@@ -87,31 +86,31 @@ const request = async (url: string, config?: RequestOptions) => {
     .catch((reason: any) => {
       // @2:断网
       if (typeof window !== 'undefined' && navigator && !navigator.onLine) {
-        toast.error('Your network is break!', { id: 'statusnetwork' });
+        toast.error('你的网络好像断开了', { id: 'offline' });
       }
       // @1:状态码失败
       if (reason && reason.status) {
         switch (reason.status) {
           case 400:
-            toast.error('Please verify your info!', { id: 'status400' });
+            toast.error('请确认你的信息！', { id: 'status400' });
             break;
           case 401:
-            toast.error('Please Login!', { id: 'status401' });
+            toast.error('请先登录！', { id: 'status401' });
             break;
           case 403:
-            toast.error('You have no access to this', { id: 'status403' });
+            toast.error('暂无权限获取', { id: 'status403' });
             break;
           case 500:
-            toast.error("Oops, there's something wrong!", { id: 'status500' });
+            toast.error('发生了一些错误，请稍后重试', { id: 'status500' });
             break;
           case 504:
-            toast.error("Oops, there's something wrong!", { id: 'status504' });
+            toast.error('发生了一些错误，请稍后重试', { id: 'status504' });
             break;
           default:
         }
       } else {
         // @3:处理返回数据格式失败
-        toast.error("Oops, there's something wrong!", { id: 'status500' });
+        toast.error('发生了一些错误，请稍后重试', { id: 'status500' });
       }
 
       return Promise.reject(reason);
