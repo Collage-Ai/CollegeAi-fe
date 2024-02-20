@@ -1,10 +1,10 @@
 import React from 'react';
-import { Select, Space } from 'antd';
+import { Select } from 'antd';
 import { MessageArgs } from '@/types/user';
 
 type SelectProps = {
   item: MessageArgs[];
-  onSelectChange: (value: string) => void;
+  onSelectChange: (value: { userMsg: string; aiMsg: string }) => void; // 更新函数签名
   value: string;
 };
 
@@ -13,11 +13,10 @@ const SelectPrompt: React.FC<SelectProps> = ({
   onSelectChange,
   value
 }) => {
-  const handleChange = (value: string) => {
-    onSelectChange(value);
+  const handleChange = (value: string, option: any) => {
+    // 使用 option 参数获取额外的数据
+    onSelectChange({ userMsg: option.key, aiMsg: value }); // 传递一个对象包含 userMsg 和 aiMsg
   };
-
-  const { Option } = Select;
 
   return (
     <Select
@@ -25,9 +24,11 @@ const SelectPrompt: React.FC<SelectProps> = ({
       style={{ width: 360 }}
       onChange={handleChange}
       value={value}
-      options={item.map((item) => {
-        return { label: item.userMsg, value: item.aiMsg, key: item.userId };
-      })}
+      options={item.map((item) => ({
+        label: item.userMsg,
+        value: item.aiMsg,
+        key: item.userMsg // key 用作 userMsg
+      }))}
     />
   );
 };

@@ -19,15 +19,22 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
   const [message, setMessage] = useState('');
   const { chatList, setChatList, replaceChatList } = useChatStore();
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedAiValue, setSelectedAiValue] = useState('');
-  const [selectValue, setSelectValue] = useStateCallback('请选择');
+  const [selectedAiValue, setSelectedAiValue] = useState(''); //下方聊天框的值
+  const [selectValue, setSelectValue] = useStateCallback('请选择'); //上方选择框的值
   const [category, setCategory] = useStateCallback([]); // 用于存储归档的类别
   const [open, setOpen] = useState(false);
   const { user } = useUserStore();
 
-  const handleSelectValue = (value: string) => {
-    setSelectValue(value);
-    setSelectedAiValue(value);
+  const handleSelectValue = ({
+    userMsg,
+    aiMsg
+  }: {
+    userMsg: string;
+    aiMsg: string;
+  }) => {
+    console.log('aiMsg', aiMsg);
+    setSelectValue(userMsg); //此处有问题
+    setSelectedAiValue(aiMsg);
   };
   //更新聊天记录，并发送消息到服务器 todo:筛选发送后端的消息
   const updateChatList = useCallback(
@@ -86,15 +93,18 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
 
   //重新发送消息
   const reSendMessage = () => {
-    const lastMsg = chatList[chatList.length - 1];
-    if (lastMsg) {
-      sendMsgToGetAIResponse(lastMsg);
-    }
+    const selectMsg = chatList.find(
+      (item) => item.userMsg === selectValue
+    ) as MessageArgs;
+
+    sendMsgToGetAIResponse(selectMsg);
   };
 
   const setChatCategory = () => {
-    //设置当前消息的类别
-    const msg = chatList[chatList.length - 1];
+    //设置所选择消息的类别
+    const msg = chatList.find(
+      (item) => item.userMsg === selectValue
+    ) as MessageArgs;
     msg.category = Number(category[1]);
     updateChatList(msg);
     setOpen(false);
