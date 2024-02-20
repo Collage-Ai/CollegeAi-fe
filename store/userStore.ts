@@ -53,12 +53,16 @@ export const useChatStore = create<ChatState>((set) => ({
 
 interface SkillState {
   skillList: SkillArgs[];
+  skillDisplayItem: SkillArgs | null;
   setSkillList: (list: SkillArgs[]) => void;
+  setSkillDisplayItem: (item: SkillArgs) => void;
 }
 
 export const useSkillStore = create<SkillState>((set) => ({
   skillList: [],
-  setSkillList: (list) => set({ skillList: list })
+  setSkillList: (list) => set({ skillList: list }),
+  skillDisplayItem: null,
+  setSkillDisplayItem: (item) => set({ skillDisplayItem: item })
 }));
 
 interface CategoryState {

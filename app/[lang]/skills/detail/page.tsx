@@ -1,19 +1,22 @@
 import SkillDisplayComponent from '@/components/skillComponent/skillDisplayComponent';
 import { Card } from 'antd';
-import { useRouter } from 'next/router';
+
 import { SkillArgs } from '../../../../types/components/skill';
+import { useSkillStore } from '@/store/userStore';
+import { useRouter } from 'next/navigation';
+import toast from '@/components/toast/toast';
 
 const Page: React.FC = () => {
-  //接收路由参数
+  const { skillDisplayItem } = useSkillStore();
   const router = useRouter();
-  const { item } = router.query;
-  const decodedItem = item
-    ? JSON.parse(decodeURIComponent(item as string))
-    : null;
+  if (!skillDisplayItem) {
+    toast.error('未找到数据');
+    router.push('/');
+  }
   return (
     <div>
       <Card>
-        <SkillDisplayComponent skill={decodedItem} />
+        <SkillDisplayComponent skill={skillDisplayItem as SkillArgs} />
       </Card>
     </div>
   );

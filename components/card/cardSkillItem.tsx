@@ -1,9 +1,9 @@
 'use client';
 import React from 'react';
 import { Button, Card, Flex, Typography } from 'antd';
-import { MessageArgs } from '@/types/user';
 import { SkillArgs } from '@/types/components/skill';
-import Router from 'next/router';
+import { useRouter } from 'next/navigation';
+import { useSkillStore } from '@/store/userStore';
 
 const cardStyle: React.CSSProperties = {
   //width: '50vw'
@@ -15,6 +15,13 @@ type CardSkillItemProps = {
 const CardSkillItem: React.FC<CardSkillItemProps> = ({ item }) => {
   const title = item.title;
   const content = item.description;
+  const router = useRouter();
+  const { setSkillDisplayItem } = useSkillStore();
+  const handleClick = async () => {
+    setSkillDisplayItem(item);
+    router.push('/detail');
+  };
+
   return (
     <Card
       hoverable
@@ -29,18 +36,7 @@ const CardSkillItem: React.FC<CardSkillItemProps> = ({ item }) => {
         style={{ padding: 24 }}
       >
         <Typography.Text>{content}</Typography.Text>
-        <Button
-          type="primary"
-          onClick={() => {
-            //路由传参
-            if (typeof window !== 'undefined') {
-              Router.push({
-                pathname: '/skill/detail',
-                query: { item: encodeURIComponent(JSON.stringify(item)) }
-              });
-            }
-          }}
-        >
+        <Button type="primary" onClick={handleClick}>
           Get Started
         </Button>
       </Flex>
