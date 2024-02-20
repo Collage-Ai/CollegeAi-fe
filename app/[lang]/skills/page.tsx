@@ -1,8 +1,6 @@
 'use client';
 import HoverInput from '@/components/input/hoverInput';
-import SkillSider from '@/components/sider/skillSider';
 import SkillComponent from '@/components/skillComponent';
-import { Row } from 'antd';
 import { useState } from 'react';
 export default function Page() {
   const [showOverlay, setShowOverlay] = useState(false);

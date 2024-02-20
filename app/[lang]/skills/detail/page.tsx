@@ -1,7 +1,3 @@
-import ChatComponent from '@/components/chatComponent';
-import DisplayComponent from '@/components/displayComponent';
-import ChatSider from '@/components/sider/chatSider';
-import SkillSider from '@/components/sider/skillSider';
 import SkillDisplayComponent from '@/components/skillComponent/skillDisplayComponent';
 import { Card } from 'antd';
 import { useRouter } from 'next/router';
