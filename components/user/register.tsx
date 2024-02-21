@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Button, Form, Input, Typography } from 'antd';
 import { LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import { RegisterReqType } from '@/types/api';
-import { postRegData } from '@/utils/fetcher';
+import { postRegData, updateUserInfo } from '@/utils/fetcher';
 import toast from '../toast/toast';
 import { useStateCallback } from '@/utils/hook';
 import { useUserStore } from '@/store/userStore';
@@ -21,15 +21,28 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
   const onFinish = async (values: RegisterReqType) => {
     setLoading(true);
     console.log('Received values of form: ', values);
-    postRegData(values).then((res) => {
-      if (res) {
-        setLoading(false);
-        toast.success('操作成功！');
-        if (!isPersonal) onRegisterSuccess(); // 注册成功后的回调
-      } else {
-        setLoading(false);
-      }
-    });
+    if (isPersonal) {
+      // 更新个人信息
+      updateUserInfo(values).then((res) => {
+        if (res) {
+          setLoading(false);
+          toast.success('保存成功！');
+          onRegisterSuccess(); // 保存成功后的回调
+        } else {
+          setLoading(false);
+        }
+      });
+    } else {
+      postRegData(values).then((res) => {
+        if (res) {
+          setLoading(false);
+          toast.success('注册成功！');
+          onRegisterSuccess(); // 注册成功后的回调
+        } else {
+          setLoading(false);
+        }
+      });
+    }
   };
 
   useEffect(() => {
