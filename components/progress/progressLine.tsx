@@ -7,7 +7,7 @@ import {
 } from '@ant-design/icons';
 import { Steps } from 'antd';
 
-const Progress: React.FC = () => (
+const ProgressLine: React.FC = () => (
   <Steps
     items={[
       {
@@ -34,4 +34,4 @@ const Progress: React.FC = () => (
   />
 );
 
-export default Progress;
+export default ProgressLine;

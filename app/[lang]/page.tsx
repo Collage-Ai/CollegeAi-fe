@@ -2,7 +2,7 @@
 // import prisma from '@/prisma';
 import { Locale } from '@/i18n/config';
 import { Card } from 'antd';
-import Progress from '@/components/progress';
+import Progress from '@/components/progress/progressLine';
 import Card1 from '@/components/card/cardHome';
 import { useEffect } from 'react';
 import { getUserInfo } from '@/utils/fetcher';

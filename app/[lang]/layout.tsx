@@ -53,10 +53,8 @@ export default function RootLayout({
         <Flexible />
         <Toaster />
         <RootLayoutClient>
-          <AppLayout>
-            {/* <Navbar /> */}
-            {children}
-          </AppLayout>
+          {/* <Navbar /> */}
+          {children}
         </RootLayoutClient>
       </body>
     </html>
