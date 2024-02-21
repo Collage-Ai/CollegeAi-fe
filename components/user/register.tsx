@@ -1,11 +1,12 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, Input, Typography } from 'antd';
 import { LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import { RegisterReqType } from '@/types/api';
 import { postRegData } from '@/utils/fetcher';
 import toast from '../toast/toast';
 import { useStateCallback } from '@/utils/hook';
+import { useUserStore } from '@/store/userStore';
 
 type RegisterFormProps = {
   onRegisterSuccess: () => void;
@@ -14,10 +15,8 @@ type RegisterFormProps = {
 
 const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
   const [loading, setLoading] = useStateCallback(false);
+  const { user } = useUserStore();
   const [form] = Form.useForm();
-  // form.setFieldsValue({
-  //   name: props.user.name
-  // });
 
   const onFinish = async (values: RegisterReqType) => {
     setLoading(true);
@@ -32,6 +31,23 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
       }
     });
   };
+
+  useEffect(() => {
+    if (user) {
+      form.setFieldsValue({
+        phone: user.phone,
+        username: user.username,
+        education: user.education,
+        major: user.major,
+        career: user.career,
+        collegeStage: user.collegeStage,
+        careerExplore: user.careerExplore,
+        advantage: user.advantage,
+        email: user.email,
+        password: user.password
+      });
+    }
+  }, [form, user]);
 
   return (
     <Form
@@ -166,7 +182,7 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
           className="register-form-button"
           loading={loading}
         >
-          注册
+          {isPersonal ? '保存' : '注册'}
         </Button>
       </Form.Item>
     </Form>
