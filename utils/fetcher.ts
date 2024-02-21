@@ -285,3 +285,24 @@ export const getUserInfo = async (): Promise<UserBaseInfo | null> => {
     return null;
   }
 };
+
+/**
+ * @description: 更新用户信息
+ * @param {UserBaseInfo} data 用户信息
+ * @return {Promise<boolean>} 是否更新成功
+ * */
+export const updateUserInfo = async (data: UserBaseInfo): Promise<boolean> => {
+  try {
+    const res = await request(`/user/${data.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data)
+    });
+    if (res.msg === 'success') {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+};

@@ -12,33 +12,21 @@ type RegisterFormProps = {
   isPersonal?: boolean;
 };
 
-const RegisterForm = ({ onRegisterSuccess }: RegisterFormProps) => {
+const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
   const [loading, setLoading] = useStateCallback(false);
+  const [form] = Form.useForm();
+  // form.setFieldsValue({
+  //   name: props.user.name
+  // });
 
   const onFinish = async (values: RegisterReqType) => {
     setLoading(true);
     console.log('Received values of form: ', values);
-    if (!values.major) {
-      //全部定义为管理员参数，全为1
-      values = {
-        username: '1',
-        password: '1',
-        phone: '1',
-        education: '1',
-        major: '1',
-        career: '1',
-        collegeStage: '1',
-        careerExplore: '1',
-        advantage: '1',
-        email: '1',
-        SMSCode: 1
-      };
-    }
     postRegData(values).then((res) => {
       if (res) {
         setLoading(false);
-        toast.success('注册成功！');
-        onRegisterSuccess(); // 注册成功后的回调
+        toast.success('操作成功！');
+        if (!isPersonal) onRegisterSuccess(); // 注册成功后的回调
       } else {
         setLoading(false);
       }
@@ -51,6 +39,7 @@ const RegisterForm = ({ onRegisterSuccess }: RegisterFormProps) => {
       className="register-form"
       initialValues={{ remember: true }}
       onFinish={onFinish}
+      form={form}
     >
       <Form.Item
         name="username"
