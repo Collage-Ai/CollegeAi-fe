@@ -9,6 +9,7 @@ import { useStateCallback } from '@/utils/hook';
 
 type RegisterFormProps = {
   onRegisterSuccess: () => void;
+  isPersonal?: boolean;
 };
 
 const RegisterForm = ({ onRegisterSuccess }: RegisterFormProps) => {

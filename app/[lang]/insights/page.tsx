@@ -1,10 +1,12 @@
 'use client';
+import BackButton from '@/components/button/backButton';
 import ChatComponent from '@/components/chatComponent';
 import DisplayComponent from '@/components/displayComponent';
 import ChatSider from '@/components/sider/chatSider';
 import { useChatStore } from '@/store/userStore';
-import { CloseOutlined } from '@ant-design/icons';
-import { Card, Flex } from 'antd';
+import { ArrowLeftOutlined, CloseOutlined } from '@ant-design/icons';
+import { Card, Flex, Typography } from 'antd';
+import Link from 'next/link';
 import React from 'react';
 import { animated, useTransition } from 'react-spring';
 
@@ -20,8 +22,9 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center">
-        <h1>你的专属行业洞察</h1>
+      <div className="flex flex-col items-start justify-center">
+        {/* 返回首页 */}
+        <BackButton title="个性化行业洞察" />
         <Flex>
           <Card title="基本信息">
             <ChatSider />

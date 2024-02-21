@@ -6,6 +6,7 @@ import { useCategoryStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { getCategoryList } from '@/utils/fetcher';
 import { useStateCallback } from '@/utils/hook';
+import BackButton from '@/components/button/backButton';
 
 const App = () => {
   const [isLoginPage, setIsLoginPage] = useStateCallback(true);
@@ -28,6 +29,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <BackButton title={isLoginPage ? '登录' : '注册'} />
       {isLoginPage ? (
         <LoginForm onLoginSuccess={handleLoginSuccess} />
       ) : (
