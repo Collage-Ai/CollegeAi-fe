@@ -42,7 +42,14 @@ const AppSider: React.FC<{
         }
       ]
     },
-    { key: '2', label: '我的主页', icon: <LaptopOutlined /> }
+    {
+      key: '2',
+      label: '我的主页',
+      icon: <LaptopOutlined />,
+      onClick: () => {
+        router.push('/personal');
+      }
+    }
   ];
   return (
     <Sider style={style}>

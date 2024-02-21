@@ -27,9 +27,6 @@ const CardInsight: React.FC<CardInsightProps> = ({ item }) => {
         style={{ padding: 24 }}
       >
         <Typography.Text>{content}</Typography.Text>
-        {/* <Button type="primary" href="https://ant.design" target="_blank">
-          Get Started
-        </Button> */}
       </Flex>
     </Card>
   );

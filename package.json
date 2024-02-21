@@ -40,6 +40,7 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-spring": "^9.7.3",
+    "search-engine-tool": "^1.0.4",
     "server-only": "^0.0.1",
     "socket.io-client": "^4.7.4",
     "swr": "^2.2.4",

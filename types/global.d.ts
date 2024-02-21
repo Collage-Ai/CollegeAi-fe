@@ -23,3 +23,5 @@ declare global {
 declare interface Window {
   ethereum: any;
 }
+
+declare module 'search-engine-tool';
