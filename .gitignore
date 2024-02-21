@@ -44,3 +44,5 @@ public/swe-worker-*
 public/workbox-*
 .env.development
 .env.development
+
+.VSCodeCounter

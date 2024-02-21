@@ -268,3 +268,20 @@ export const sendCategoryInfoToServer = async (
     return false;
   }
 };
+
+/**
+ * 根据token,获取用户信息
+ * @returns {Promise<UserBaseInfo | null>} 用户信息
+ */
+export const getUserInfo = async (): Promise<UserBaseInfo | null> => {
+  try {
+    const res = await request('/user/info');
+    if (res.msg === 'success') {
+      return res.data;
+    }
+    return null;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
