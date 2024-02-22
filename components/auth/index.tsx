@@ -1,5 +1,5 @@
 import { JSX, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { getCookie } from '@/utils/cookie';
 
 const withAuth = (WrappedComponent: React.FC) => {
