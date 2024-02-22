@@ -41,9 +41,6 @@ export const postRegData = async (data: UserBaseInfo): Promise<boolean> => {
   } catch (err: any) {
     console.error(err);
     //如果400，说明用户名已存在
-    if (err.status === 400) {
-      toast.error('用户名已存在！');
-    }
     return false;
   }
 };
@@ -142,7 +139,7 @@ export const getSMSCode = async (phone: string): Promise<boolean> => {
       method: 'POST',
       body: JSON.stringify({ phone })
     });
-    if (res.ok) {
+    if (res.msg === 'success') {
       return true;
     }
     return false;

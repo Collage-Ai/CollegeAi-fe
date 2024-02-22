@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Button, Form, Input, Typography } from 'antd';
 import { LockOutlined, PhoneOutlined, UserOutlined } from '@ant-design/icons';
 import { RegisterReqType } from '@/types/api';
-import { postRegData, updateUserInfo } from '@/utils/fetcher';
+import { getSMSCode, postRegData, updateUserInfo } from '@/utils/fetcher';
 import toast from '../toast/toast';
 import { useStateCallback } from '@/utils/hook';
 import { useUserStore } from '@/store/userStore';
@@ -15,6 +15,9 @@ type RegisterFormProps = {
 
 const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
   const [loading, setLoading] = useStateCallback(false);
+  const [smsLoading, setSmsLoading] = useStateCallback(false);
+  //展示sms等待60s
+  const [smsTime, setSmsTime] = useStateCallback(60);
   const { user } = useUserStore();
   const [form] = Form.useForm();
 
@@ -45,6 +48,25 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
     }
   };
 
+  const sendSMS = () => {
+    getSMSCode(form.getFieldValue('phone')).then((res) => {
+      if (res) {
+        toast.success('发送成功！');
+        setSmsLoading(true);
+        const timer = setInterval(() => {
+          setSmsTime((prev: number) => {
+            if (prev === 0) {
+              clearInterval(timer);
+              setSmsLoading(false);
+              return 60;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+      }
+    });
+  };
+
   useEffect(() => {
     if (user) {
       form.setFieldsValue({
@@ -57,7 +79,8 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
         careerExplore: user.careerExplore,
         advantage: user.advantage,
         email: user.email,
-        password: user.password
+        password: user.password,
+        smsCode: ' '
       });
     }
   }, [form, user]);
@@ -163,14 +186,31 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
       </Form.Item>
       <Form.Item
         name="SMSCode"
+        label="验证码"
         rules={[{ required: true, message: '请输入验证码!' }]}
       >
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
-          type="number"
           placeholder="验证码"
         />
       </Form.Item>
+      {smsLoading ? (
+        <Button
+          type="primary"
+          className="register-form-button"
+          loading={smsLoading}
+        >
+          {smsTime}s
+        </Button>
+      ) : (
+        <Button
+          type="primary"
+          className="register-form-button"
+          onClick={sendSMS}
+        >
+          发送验证码
+        </Button>
+      )}
       <Form.Item
         name="password"
         rules={[{ required: true, message: '请输入你的密码!' }]}

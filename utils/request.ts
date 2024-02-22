@@ -81,7 +81,10 @@ const request = async (url: string, config?: RequestOptions) => {
         return result;
       }
       // 失败的处理
-      return Promise.reject(response);
+      return response.json().then((errorResponse) => {
+        toast.error(errorResponse.msg, { id: `status${status}` });
+        return Promise.reject({ response, errorResponse });
+      });
     })
     .catch((reason: any) => {
       // @2:断网
@@ -90,23 +93,27 @@ const request = async (url: string, config?: RequestOptions) => {
       }
       // @1:状态码失败
       if (reason && reason.status) {
-        switch (reason.status) {
-          case 400:
-            toast.error('请确认你的信息！', { id: 'status400' });
-            break;
-          case 401:
-            toast.error('请先登录！', { id: 'status401' });
-            break;
-          case 403:
-            toast.error('暂无权限获取', { id: 'status403' });
-            break;
-          case 500:
-            toast.error('发生了一些错误，请稍后重试', { id: 'status500' });
-            break;
-          case 504:
-            toast.error('发生了一些错误，请稍后重试', { id: 'status504' });
-            break;
-          default:
+        if (reason.errorResponse.msg) {
+          toast.error(reason.errorResponse.msg);
+        } else {
+          switch (reason.status) {
+            case 400:
+              toast.error('请确认你的信息！', { id: 'status400' });
+              break;
+            case 401:
+              toast.error('请先登录！', { id: 'status401' });
+              break;
+            case 403:
+              toast.error('暂无权限获取', { id: 'status403' });
+              break;
+            case 500:
+              toast.error('发生了一些错误，请稍后重试', { id: 'status500' });
+              break;
+            case 504:
+              toast.error('发生了一些错误，请稍后重试', { id: 'status504' });
+              break;
+            default:
+          }
         }
       } else {
         // @3:处理返回数据格式失败
