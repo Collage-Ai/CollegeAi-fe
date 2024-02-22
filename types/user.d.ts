@@ -27,7 +27,7 @@ export type MessageArgs = {
   userId: number | undefined;
   aiMsg: string;
   userMsg: string;
-  time?: string;
-  category?: number;
+  time: string;
+  category: number;
   type: 'insight' | 'skill';
 };

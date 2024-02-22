@@ -9,10 +9,8 @@ interface BackButtonProps {
 const BackButton: React.FC<BackButtonProps> = ({ title }) => {
   return (
     <div className="mt-4 flex items-center justify-start">
-      <Link href="/">
-        <ArrowLeftOutlined />
-        返回首页
-      </Link>
+      <ArrowLeftOutlined />
+      <Link href="/">返回首页</Link>
       <h1>{title}</h1>
     </div>
   );

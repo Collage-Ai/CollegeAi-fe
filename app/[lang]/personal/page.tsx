@@ -1,3 +1,4 @@
+'use client';
 import BackButton from '@/components/button/backButton';
 import RegisterForm from '@/components/user/register';
 

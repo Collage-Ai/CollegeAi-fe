@@ -5,9 +5,8 @@ import ChatComponent from '@/components/chatComponent';
 import DisplayComponent from '@/components/displayComponent';
 import ChatSider from '@/components/sider/chatSider';
 import { useChatStore } from '@/store/userStore';
-import { ArrowLeftOutlined, CloseOutlined } from '@ant-design/icons';
-import { Card, Flex, Typography } from 'antd';
-import Link from 'next/link';
+import { CloseOutlined } from '@ant-design/icons';
+import { Card, Flex } from 'antd';
 import React from 'react';
 import { animated, useTransition } from 'react-spring';
 

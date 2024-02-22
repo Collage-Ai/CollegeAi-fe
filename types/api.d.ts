@@ -1,6 +1,6 @@
 import { UserBaseInfo } from './user';
 export type LoginResType = {
-  data?: {
+  data: {
     token: string;
     userInfo: UserBaseInfo;
     expire?: string;
