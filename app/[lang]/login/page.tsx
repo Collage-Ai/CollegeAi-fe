@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import LoginForm from '@/components/user/login';
 import RegisterForm from '@/components/user/register';
-import { useCategoryStore } from '@/store/userStore';
+import { useCategoryStore, useUserStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { getCategoryList } from '@/utils/fetcher';
 import { useStateCallback } from '@/utils/hook';
@@ -11,10 +11,12 @@ import BackButton from '@/components/button/backButton';
 const App = () => {
   const [isLoginPage, setIsLoginPage] = useStateCallback(true);
   const { setCategoryList } = useCategoryStore();
+  const { setIsLogin } = useUserStore();
   const Router = useRouter();
 
   const handleLoginSuccess = () => {
     // 处理登录成功逻辑，如跳转到主页
+    setIsLogin(true);
     getCategoryList().then((res) => {
       setCategoryList(res);
     });

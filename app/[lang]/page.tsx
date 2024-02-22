@@ -25,9 +25,10 @@ export const revalidate = 10;
 // }
 
 export default function Home({ params }: { params: { lang: Locale } }) {
-  const { setUser, isLogin } = useUserStore();
+  const { setUser, isLogin, setIsLogin } = useUserStore();
   useEffect(() => {
     getUserInfo().then((res) => {
+      setIsLogin(true);
       if (res) {
         setUser(res);
       }

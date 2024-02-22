@@ -18,7 +18,7 @@ type ChatComponentProps = {
 const ChatComponent = ({ type, search }: ChatComponentProps) => {
   const [message, setMessage] = useState('');
   const { chatList, setChatList, replaceChatList } = useChatStore();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useStateCallback(false);
   const [selectedAiValue, setSelectedAiValue] = useState(''); //下方聊天框的值
   const [selectValue, setSelectValue] = useStateCallback('请选择'); //上方选择框的值
   const [category, setCategory] = useStateCallback([]); // 用于存储归档的类别
@@ -61,7 +61,7 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
 
   const sendMsgToGetAIResponse = useCallback(
     (msg: MessageArgs) => {
-      setIsLoading((isLoading) => !isLoading);
+      setIsLoading((isLoading: boolean) => !isLoading);
       setSelectValue(msg.userMsg);
       getAIResponse(msg.userMsg)
         .then((res) => {
