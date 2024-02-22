@@ -1,11 +1,12 @@
 'use client';
+import withAuth from '@/components/auth';
 import HoverInput from '@/components/input/hoverInput';
 import SkillComponent from '@/components/skillComponent';
 import { useSkillStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function Page() {
+function Page() {
   const [showOverlay, setShowOverlay] = useState(false);
   const Router = useRouter();
   const { setSearchPrompt } = useSkillStore();
@@ -32,3 +33,5 @@ export default function Page() {
     </>
   );
 }
+
+export default withAuth(Page);

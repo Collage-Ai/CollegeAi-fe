@@ -12,6 +12,8 @@ import Link from 'next/link';
 import AppSider from '@/components/sider/sider';
 import CardPersonalHome from '@/components/card/cardPersonalHome';
 import ProgressCycle from '@/components/progress/progressCycle';
+import { useRouter } from 'next/navigation';
+import { getCookie } from '@/utils/cookie';
 
 // revalidate this page every 10 seconds, but don't useful for this app dir, so please use pages/api for restful api and fetch on here. example see [id]/page.tsx
 export const revalidate = 10;
@@ -26,6 +28,7 @@ export const revalidate = 10;
 
 export default function Home({ params }: { params: { lang: Locale } }) {
   const { setUser, isLogin, setIsLogin } = useUserStore();
+  const router = useRouter();
   useEffect(() => {
     getUserInfo().then((res) => {
       setIsLogin(true);
@@ -33,8 +36,7 @@ export default function Home({ params }: { params: { lang: Locale } }) {
         setUser(res);
       }
     });
-  }, [setUser]);
-
+  }, [setIsLogin, setUser]);
   return (
     <div>
       {/* top */}

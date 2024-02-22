@@ -1,4 +1,5 @@
 'use client';
+import withAuth from '@/components/auth';
 import BackButton from '@/components/button/backButton';
 import ChatComponent from '@/components/chatComponent';
 import DisplayComponent from '@/components/displayComponent';
@@ -10,7 +11,7 @@ import Link from 'next/link';
 import React from 'react';
 import { animated, useTransition } from 'react-spring';
 
-export default function Page() {
+function Page() {
   const { displayCategory, setDisplayCategory } = useChatStore();
 
   // 为 DisplayComponent 创建过渡动画
@@ -51,3 +52,5 @@ export default function Page() {
     </>
   );
 }
+
+export default withAuth(Page);

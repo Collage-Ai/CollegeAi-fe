@@ -6,6 +6,7 @@ import { SkillArgs } from '../../../../types/components/skill';
 import { useSkillStore } from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 import toast from '@/components/toast/toast';
+import withAuth from '@/components/auth';
 
 const Page: React.FC = () => {
   const { skillDisplayItem } = useSkillStore();
@@ -23,4 +24,4 @@ const Page: React.FC = () => {
   );
 };
 
-export default Page;
+export default withAuth(Page);
