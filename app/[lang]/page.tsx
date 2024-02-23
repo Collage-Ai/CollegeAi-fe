@@ -26,8 +26,8 @@ export default function Home({ params }: { params: { lang: Locale } }) {
   const { setUser, isLogin, setIsLogin } = useUserStore();
   useEffect(() => {
     getUserInfo().then((res) => {
-      setIsLogin(true);
       if (res) {
+        setIsLogin(true);
         setUser(res);
       }
     });
