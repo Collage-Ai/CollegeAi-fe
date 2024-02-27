@@ -17,7 +17,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:slug*',
-        destination: `http://localhost:3000/api/:slug*`
+        destination: `${process.env.BACKEND_URL}/api/:slug*`
       }
     ];
   },
