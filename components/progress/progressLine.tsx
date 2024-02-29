@@ -26,12 +26,10 @@ const ProgressLine: React.FC = () => {
         },
         {
           title: '确定阶段',
-
           icon: <LoadingOutlined />
         },
         {
           title: '过渡阶段',
-
           icon: <SmileOutlined />
         }
       ]}

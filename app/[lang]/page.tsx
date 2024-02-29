@@ -43,7 +43,7 @@ export default function Home({ params }: { params: { lang: Locale } }) {
   }, [setIsLogin, setUser]);
 
   useEffect(() => {
-    if (isLogin && user) {
+    if (isLogin && user && analyticsResult === null) {
       getAIAnalysis(user).then((res) => {
         if (res !== null) setAnalyticsResult(res);
       });
@@ -76,6 +76,7 @@ export default function Home({ params }: { params: { lang: Locale } }) {
             <Progress />
             <div className="mt-4 flex flex-col p-6">
               <h1>To Do List</h1>
+              <p>{analyticsResult?.建议活动}</p>
               <div className="flex w-[75vw] justify-between">
                 <Card title="实习" style={{ width: '20vw' }}></Card>
                 <Card title="技能提升" style={{ width: '20vw' }}></Card>
