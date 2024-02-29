@@ -189,25 +189,26 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
         name="SMSCode"
         label="验证码"
         rules={[{ required: true, message: '请输入验证码!' }]}
-        className="flex justify-between "
       >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          placeholder="验证码"
-        />
-        {smsLoading ? (
-          <Button type="primary" loading={smsLoading}>
-            {smsTime}s
-          </Button>
-        ) : (
-          <Button
-            type="primary"
-            className="register-form-button"
-            onClick={sendSMS}
-          >
-            发送验证码
-          </Button>
-        )}
+        <div className="flex justify-between">
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            placeholder="验证码"
+          />
+          {smsLoading ? (
+            <Button type="primary" loading={smsLoading}>
+              {smsTime}s
+            </Button>
+          ) : (
+            <Button
+              type="primary"
+              className="register-form-button"
+              onClick={sendSMS}
+            >
+              发送验证码
+            </Button>
+          )}
+        </div>
       </Form.Item>
 
       <Form.Item
@@ -228,13 +229,8 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
           <Radio value={3}>硕士</Radio>
         </Radio.Group>
       </Form.Item> */}
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="self-center"
-          loading={loading}
-        >
+      <Form.Item className="flex items-center justify-center">
+        <Button type="primary" htmlType="submit" loading={loading}>
           {isPersonal ? '保存' : '注册'}
         </Button>
       </Form.Item>

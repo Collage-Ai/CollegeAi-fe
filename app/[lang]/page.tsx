@@ -23,7 +23,7 @@ export const revalidate = 10;
 // }
 
 export default function Home({ params }: { params: { lang: Locale } }) {
-  const { setUser, isLogin, setIsLogin } = useUserStore();
+  const { setUser, isLogin, setIsLogin, user } = useUserStore();
   useEffect(() => {
     getUserInfo().then((res) => {
       if (res) {
@@ -43,7 +43,7 @@ export default function Home({ params }: { params: { lang: Locale } }) {
             登录
           </Button>
         )}
-        <h1>开启你的产品经理之旅</h1>
+        <h1>开启你的{user?.career || 'CollegeAi'}之旅</h1>
         <ProgressCycle />
       </div>
       <div className="flex">
