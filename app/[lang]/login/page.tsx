@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { getCategoryList } from '@/utils/fetcher';
 import { useStateCallback } from '@/utils/hook';
 import BackButton from '@/components/button/backButton';
+import { Card } from 'antd';
 
 const App = () => {
   const [isLoginPage, setIsLoginPage] = useStateCallback(true);
@@ -30,16 +31,22 @@ const App = () => {
   };
 
   return (
-    <div className="App">
+    <div>
       <BackButton title={isLoginPage ? '登录' : '注册'} />
-      {isLoginPage ? (
-        <LoginForm onLoginSuccess={handleLoginSuccess} />
-      ) : (
-        <RegisterForm onRegisterSuccess={handleRegisterSuccess} />
-      )}
-      <a onClick={() => setIsLoginPage(!isLoginPage)}>
-        {isLoginPage ? '没有账号？去注册' : '已有账号？去登录'}
-      </a>
+      <Card
+        className="ml-[25vw] mt-[10vh] flex min-h-[40vh] w-[50vw] items-center justify-center"
+        hoverable
+        bordered
+      >
+        {isLoginPage ? (
+          <LoginForm onLoginSuccess={handleLoginSuccess} />
+        ) : (
+          <RegisterForm onRegisterSuccess={handleRegisterSuccess} />
+        )}
+        <a onClick={() => setIsLoginPage(!isLoginPage)}>
+          {isLoginPage ? '没有账号？去注册' : '已有账号？去登录'}
+        </a>
+      </Card>
     </div>
   );
 };

@@ -44,7 +44,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
       >
         <Input
           prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="用户名"
+          placeholder="手机号码"
         />
       </Form.Item>
       <Form.Item

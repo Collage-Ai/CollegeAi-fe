@@ -177,6 +177,7 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
       </Form.Item>
       <Form.Item
         name="phone"
+        label="你的手机号码是？"
         rules={[{ required: true, message: '请输入你的手机号码!' }]}
       >
         <Input
@@ -188,31 +189,30 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
         name="SMSCode"
         label="验证码"
         rules={[{ required: true, message: '请输入验证码!' }]}
+        className="flex justify-between "
       >
         <Input
           prefix={<LockOutlined className="site-form-item-icon" />}
           placeholder="验证码"
         />
+        {smsLoading ? (
+          <Button type="primary" loading={smsLoading}>
+            {smsTime}s
+          </Button>
+        ) : (
+          <Button
+            type="primary"
+            className="register-form-button"
+            onClick={sendSMS}
+          >
+            发送验证码
+          </Button>
+        )}
       </Form.Item>
-      {smsLoading ? (
-        <Button
-          type="primary"
-          className="register-form-button"
-          loading={smsLoading}
-        >
-          {smsTime}s
-        </Button>
-      ) : (
-        <Button
-          type="primary"
-          className="register-form-button"
-          onClick={sendSMS}
-        >
-          发送验证码
-        </Button>
-      )}
+
       <Form.Item
         name="password"
+        label="你的密码是？"
         rules={[{ required: true, message: '请输入你的密码!' }]}
       >
         <Input
@@ -232,7 +232,7 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
         <Button
           type="primary"
           htmlType="submit"
-          className="register-form-button"
+          className="self-center"
           loading={loading}
         >
           {isPersonal ? '保存' : '注册'}
