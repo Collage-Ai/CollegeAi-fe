@@ -1,3 +1,4 @@
+import { aiAnalysis } from '@/types/components/ai';
 import { UserBaseInfo } from '@/types/user';
 
 let lastCallTime: number = 0;
@@ -11,7 +12,7 @@ type getAIResponseProps = {
 export async function getAIResponse({
   message,
   promptMessage
-}: getAIResponseProps) {
+}: getAIResponseProps): Promise<any> {
   const minimumInterval = 1000; // 设置最小请求间隔为1000毫秒
   const currentTime = new Date().getTime();
 
@@ -64,7 +65,7 @@ export async function getAIResponse({
  * @param {UserBaseInfo} user 用户信息
  * @returns {Promise<string>} ai回复
  */
-export async function getAIAnalysis(user: UserBaseInfo) {
+export async function getAIAnalysis(user: UserBaseInfo): Promise<aiAnalysis> {
   const message = `用户信息：${JSON.stringify(user)}`;
   const promptMessage = [
     {

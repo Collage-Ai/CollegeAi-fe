@@ -10,6 +10,8 @@ import Link from 'next/link';
 import AppSider from '@/components/sider/sider';
 import CardPersonalHome from '@/components/card/cardPersonalHome';
 import ProgressCycle from '@/components/progress/progressCycle';
+import { getAIAnalysis } from '@/utils/ai';
+import { aiAnalysis } from '@/types/components/ai';
 
 // revalidate this page every 10 seconds, but don't useful for this app dir, so please use pages/api for restful api and fetch on here. example see [id]/page.tsx
 export const revalidate = 10;
@@ -23,7 +25,14 @@ export const revalidate = 10;
 // }
 
 export default function Home({ params }: { params: { lang: Locale } }) {
-  const { setUser, isLogin, setIsLogin, user } = useUserStore();
+  const {
+    setUser,
+    isLogin,
+    setIsLogin,
+    user,
+    analyticsResult,
+    setAnalyticsResult
+  } = useUserStore();
   useEffect(() => {
     getUserInfo().then((res) => {
       if (res) {
@@ -32,6 +41,14 @@ export default function Home({ params }: { params: { lang: Locale } }) {
       }
     });
   }, [setIsLogin, setUser]);
+
+  useEffect(() => {
+    if (isLogin && user) {
+      getAIAnalysis(user).then((res) => {
+        if (res !== null) setAnalyticsResult(res);
+      });
+    }
+  }, [isLogin, setAnalyticsResult]);
   return (
     <div>
       {/* top */}

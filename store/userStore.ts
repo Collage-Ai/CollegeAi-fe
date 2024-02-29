@@ -2,10 +2,13 @@ import { create } from 'zustand';
 import { MessageArgs, UserBaseInfo } from '../types/user';
 import { SkillArgs } from '@/types/components/skill';
 import { CategoryArgs } from '@/types/components/category';
+import { aiAnalysis } from '@/types/components/ai';
 
 interface UserState {
   user: UserBaseInfo | null;
   setUser: (user: UserBaseInfo | null) => void; // Updated parameter type
+  analyticsResult: aiAnalysis | null;
+  setAnalyticsResult: (result: aiAnalysis | null) => void;
   logout: () => void;
   isLogin: boolean;
   setIsLogin: (isLogin: boolean) => void;
@@ -14,6 +17,8 @@ interface UserState {
 export const useUserStore = create<UserState>((set) => ({
   user: null, // 初始用户状态为空
   setUser: (user) => set({ user }), // 更新用户信息
+  analyticsResult: null,
+  setAnalyticsResult: (result) => set({ analyticsResult: result }),
   logout: () => set({ user: null }), // 退出登录，清空用户信息
   isLogin: false,
   setIsLogin: (isLogin) => set({ isLogin })
@@ -37,7 +42,8 @@ export const useChatStore = create<ChatState>((set) => ({
       aiMsg: '你好，我是AI助手，有什么可以帮助你的吗？',
       userMsg: '我有一个问题',
       time: '2021-09-12 12:00:00',
-      type: 'insight'
+      type: 'insight',
+      category: 0
     }
   ],
   chatCategoryList: [],
