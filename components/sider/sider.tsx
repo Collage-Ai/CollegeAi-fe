@@ -52,12 +52,12 @@ const AppSider: React.FC<{
     }
   ];
   return (
-    <Sider style={style}>
+    <Sider style={style} className="min-h-[90vh]">
       <Menu
         mode="inline"
         defaultSelectedKeys={['1']}
         defaultOpenKeys={['sub1']}
-        style={{ height: '100%', borderRight: 0 }}
+        style={{ borderRight: 0 }}
         items={items}
       />
     </Sider>

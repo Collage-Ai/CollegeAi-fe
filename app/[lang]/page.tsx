@@ -39,11 +39,13 @@ export default function Home({ params }: { params: { lang: Locale } }) {
         {isLogin ? (
           <CardPersonalHome />
         ) : (
-          <Button type="primary" href="/login">
-            登录
+          <Button type="primary" href="/login" className="ml-4 mt-6">
+            点此登录
           </Button>
         )}
-        <h1>开启你的{user?.career || 'CollegeAi'}之旅</h1>
+        <h1 className="ml-[10vw] mt-6">
+          开启你的{user?.career || 'CollegeAi'}之旅
+        </h1>
         <ProgressCycle />
       </div>
       <div className="flex">
