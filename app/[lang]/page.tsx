@@ -55,32 +55,37 @@ export default function Home({ params }: { params: { lang: Locale } }) {
         </div>
         {/* content right */}
         <div>
-          <Card>
+          <Card className="flex flex-col">
             <Progress />
-            <div className="flex flex-col">
+            <div className="mt-4 flex flex-col p-6">
               <h1>To Do List</h1>
-              <div className="flex">
-                <Card title="实习" style={{ width: 300 }}></Card>
-                <Card title="技能提升" style={{ width: 300 }}></Card>
-                <Card title="社群活动" style={{ width: 300 }}></Card>
+              <div className="flex w-[75vw] justify-between">
+                <Card title="实习" style={{ width: '20vw' }}></Card>
+                <Card title="技能提升" style={{ width: '20vw' }}></Card>
+                <Card title="社群活动" style={{ width: '20vw' }}></Card>
               </div>
             </div>
           </Card>
-
-          <div className="flex">
+          <div className="mt-12 flex min-w-[75vw] justify-between">
             <Card
               title="行业洞察"
               extra={<Link href="/insights">点击查看更多</Link>}
-              style={{ width: 300 }}
+              style={{ width: '25vw' }}
             >
               提供有关行业的深入信息和最新动态
             </Card>
             <Card
               title="资源速配"
               extra={<Link href="/skills">点击查看更多</Link>}
-              style={{ width: 300 }}
+              style={{
+                width: '50vw'
+              }}
             >
               提供有关职业的实习推荐和活动资源
+              <div className="flex justify-between">
+                <Card title="实习" className="w-[18vw]" />
+                <Card title="竞赛" className="w-[18vw]" />
+              </div>
             </Card>
           </div>
         </div>
