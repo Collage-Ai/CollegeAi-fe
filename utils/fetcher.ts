@@ -5,7 +5,6 @@ import { useUserStore } from '@/store/userStore';
 import { deleteCookie, getCookie, setCookie } from './cookie';
 import { SkillArgs } from '@/types/components/skill';
 import { CategoryArgs } from '@/types/components/category';
-import toast from '@/components/toast/toast';
 
 // utils/fetcher.ts
 export const fetcher = (url: string) => request(url).then((res) => res.json());
