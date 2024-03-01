@@ -1,6 +1,7 @@
 import { JSX, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { getCookie } from '@/utils/cookie';
+import toast from '../toast/toast';
 
 const withAuth = (WrappedComponent: React.FC) => {
   const RequiresAuth = (props: JSX.IntrinsicAttributes) => {
@@ -14,6 +15,7 @@ const withAuth = (WrappedComponent: React.FC) => {
     const isAuthenticated = checkAuth(); // 实现你的认证检查逻辑
     useEffect(() => {
       if (!isAuthenticated) {
+        toast.error('请先登录');
         router.push('/login'); // 如果未认证，重定向到登录页
       }
     }, [isAuthenticated, router]);

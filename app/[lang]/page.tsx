@@ -34,12 +34,13 @@ export default function Home({ params }: { params: { lang: Locale } }) {
     setAnalyticsResult
   } = useUserStore();
   useEffect(() => {
-    getUserInfo().then((res) => {
-      if (res) {
-        setIsLogin(true);
-        setUser(res);
-      }
-    });
+    isLogin &&
+      getUserInfo().then((res) => {
+        if (res) {
+          setIsLogin(true);
+          setUser(res);
+        }
+      });
   }, [setIsLogin, setUser]);
 
   useEffect(() => {
