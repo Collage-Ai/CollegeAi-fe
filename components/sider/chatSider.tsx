@@ -141,7 +141,7 @@ const ChatSider: React.FC<{
     setDisplayCategory(Number(key));
   };
   return (
-    <Sider style={style}>
+    <Sider style={style} className="min-h-[80vh]">
       <Menu
         mode="inline"
         style={{ height: '100%', borderRight: 0 }}

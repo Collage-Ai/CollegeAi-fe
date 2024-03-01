@@ -25,7 +25,7 @@ function Page() {
       <div className="flex flex-col items-start justify-center">
         {/* 返回首页 */}
         <BackButton title="个性化行业洞察" />
-        <Flex>
+        <div className="mt-6 flex w-[90vw] justify-around">
           <Card title="基本信息">
             <ChatSider />
           </Card>
@@ -46,7 +46,7 @@ function Page() {
           <Card>
             <ChatComponent type="insight" />
           </Card>
-        </Flex>
+        </div>
       </div>
     </>
   );

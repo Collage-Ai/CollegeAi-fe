@@ -63,7 +63,7 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
     (msg: MessageArgs) => {
       setIsLoading((isLoading: boolean) => !isLoading);
       setSelectValue(msg.userMsg);
-      getAIResponse(msg.userMsg)
+      getAIResponse({ message: msg.userMsg })
         .then((res) => {
           msg.aiMsg = res as string;
           updateChatList(msg);
@@ -84,7 +84,9 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
         userId: user?.id,
         aiMsg: '',
         userMsg: message,
-        type: type
+        type: type,
+        time: new Date().toLocaleString(),
+        category: 0
       };
       sendMsgToGetAIResponse(msg);
     }
@@ -127,7 +129,9 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
         userId: user?.id,
         aiMsg: '',
         userMsg: search,
-        type: type
+        type: type,
+        time: new Date().toLocaleString(),
+        category: 0
       };
       setIsLoading(true);
       sendMsgToGetAIResponse(msg);
@@ -135,7 +139,7 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
   }, []);
 
   return (
-    <div className="flex h-full w-[40vw] flex-col">
+    <div className="flex h-full w-[50vw] flex-col">
       <ModalCategory
         open={open}
         onOk={() => {
