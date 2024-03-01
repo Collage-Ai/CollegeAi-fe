@@ -17,7 +17,7 @@ interface RequestOptions extends RequestInit {
 
 // 发送数据请求
 const request = async (url: string, config?: RequestOptions) => {
-  const finalUrl: string = `${process.env.BACKEND_URL}/api${url}`;
+  const finalUrl: string = `/api${url}`;
   const inital: RequestOptions = {
     method: 'GET',
     body: null,

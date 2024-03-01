@@ -13,14 +13,14 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true
   },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: '/api/:slug*',
-  //       destination: `${process.env.BACKEND_URL}/api/:slug*`
-  //     }
-  //   ];
-  // },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:slug*',
+        destination: `${process.env.BACKEND_URL}/api/:slug*`
+      }
+    ];
+  },
   async headers() {
     return [
       {
