@@ -302,3 +302,25 @@ export const updateUserInfo = async (data: UserBaseInfo): Promise<boolean> => {
     return false;
   }
 };
+
+/**
+ * @description: 进行联网ai对话
+ * @param {string} message 用户消息
+ * @return {Promise<string>} ai回复
+ * */
+export const getWebAIResponse = async (message: string): Promise<string> => {
+  try {
+    const res = await fetch(process.env.NEXT_PUBLIC_WEB_CHAT_URL ?? '', {
+      method: 'POST',
+      body: JSON.stringify({ message })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+    return '';
+  } catch (err) {
+    console.error(err);
+    return '';
+  }
+};

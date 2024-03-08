@@ -16,7 +16,6 @@ const ProgressLine: React.FC = () => {
       items={[
         {
           title: '探索阶段',
-
           icon: <UserOutlined />
         },
         {
