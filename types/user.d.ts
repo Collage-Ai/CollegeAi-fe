@@ -20,6 +20,17 @@ export type UserBaseInfo = {
   advantage: string; //个人优势
   email: string;
   password: string;
+  skillPoint1: string | skillPoint;
+  skillPoint2: string | skillPoint;
+  skillPoint3: string | skillPoint;
+};
+
+export type skillPoint = {
+  skill: {
+    活动1: unknown;
+    活动2: unknown;
+    活动3: unknown;
+  };
 };
 
 export type MessageArgs = {
