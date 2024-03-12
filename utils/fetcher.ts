@@ -312,7 +312,16 @@ export const getWebAIResponse = async (message: string): Promise<string> => {
   try {
     const res = await fetch(process.env.NEXT_PUBLIC_WEB_CHAT_URL ?? '', {
       method: 'POST',
-      body: JSON.stringify({ message })
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: message,
+        isSort: false,
+        type: 'insight',
+        userInfo: useUserStore.getState().user,
+        field: useUserStore.getState().user?.career
+      })
     });
     if (res.ok) {
       const data = await res.json();

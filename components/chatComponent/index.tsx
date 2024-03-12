@@ -64,7 +64,7 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
     (msg: MessageArgs) => {
       setIsLoading((isLoading: boolean) => !isLoading);
       setSelectValue(msg.userMsg);
-      getAIResponse({ message: msg.userMsg })
+      getAIResponse({ message: msg.userMsg, isWeb: isWebChat })
         .then((res) => {
           msg.aiMsg = res as string;
           updateChatList(msg);
