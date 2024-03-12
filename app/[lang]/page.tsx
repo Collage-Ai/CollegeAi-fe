@@ -43,13 +43,14 @@ export default function Home({ params }: { params: { lang: Locale } }) {
       });
   }, [setIsLogin, setUser]);
 
-  useEffect(() => {
-    if (isLogin && user && analyticsResult === null) {
-      getAIAnalysis(user).then((res) => {
-        if (res !== null) setAnalyticsResult(res);
-      });
-    }
-  }, [isLogin, setAnalyticsResult]);
+  // useEffect(() => {
+  //   if (isLogin && user && analyticsResult === null) {
+  //     getAIAnalysis(user).then((res) => {
+
+  //       if (res !== null) setAnalyticsResult(res);
+  //     });
+  //   }
+  // }, [isLogin, setAnalyticsResult]);
   return (
     <div>
       {/* top */}
