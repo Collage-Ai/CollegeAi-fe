@@ -1,6 +1,6 @@
 'use client';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Button, Flex, Input } from 'antd';
+import { Button, Checkbox, CheckboxProps, Flex, Input, Tooltip } from 'antd';
 import { MessageArgs } from '../../types/user';
 import { useChatStore, useUserStore } from '@/store/userStore';
 import { getChatHistory, sendMsgToServer } from '@/utils/fetcher';
@@ -22,6 +22,7 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
   const [selectedAiValue, setSelectedAiValue] = useState(''); //下方聊天框的值
   const [selectValue, setSelectValue] = useStateCallback('请选择'); //上方选择框的值
   const [category, setCategory] = useStateCallback([]); // 用于存储归档的类别
+  const [isWebChat, setIsWebChat] = useStateCallback(false); //是否使用联网功能
   const [open, setOpen] = useState(false);
   const { user } = useUserStore();
 
@@ -63,7 +64,7 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
     (msg: MessageArgs) => {
       setIsLoading((isLoading: boolean) => !isLoading);
       setSelectValue(msg.userMsg);
-      getAIResponse({ message: msg.userMsg })
+      getAIResponse({ message: msg.userMsg, isWeb: isWebChat })
         .then((res) => {
           msg.aiMsg = res as string;
           updateChatList(msg);
@@ -119,6 +120,10 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
     });
   }, [replaceChatList]);
 
+  const onCheckBoxChange: CheckboxProps['onChange'] = (e) => {
+    setIsWebChat(e.target.checked);
+  };
+
   useEffect(() => {
     setChatHistory();
   }, [setChatHistory]);
@@ -170,6 +175,9 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
         <Button type="primary" onClick={sendMessage} disabled>
           分享
         </Button>
+        <Tooltip title="注意：联网后需要进行网络检索，速度可能较慢，请耐心等待">
+          <Checkbox onChange={onCheckBoxChange}>使用联网功能</Checkbox>;
+        </Tooltip>
       </Flex>
       <div className="flex p-4">
         <Input

@@ -1,5 +1,6 @@
 import { aiAnalysis } from '@/types/components/ai';
 import { UserBaseInfo } from '@/types/user';
+import { getWebAIResponse } from './fetcher';
 
 let lastCallTime: number = 0;
 let debounceTimer: NodeJS.Timeout;
@@ -7,11 +8,13 @@ let debounceTimer: NodeJS.Timeout;
 type getAIResponseProps = {
   message: string;
   promptMessage?: object[];
+  isWeb?: boolean;
 };
 
 export async function getAIResponse({
   message,
-  promptMessage
+  promptMessage,
+  isWeb = false
 }: getAIResponseProps): Promise<any> {
   const minimumInterval = 1000; // 设置最小请求间隔为1000毫秒
   const currentTime = new Date().getTime();
@@ -27,6 +30,7 @@ export async function getAIResponse({
   return new Promise((resolve, reject) => {
     debounceTimer = setTimeout(async () => {
       try {
+        if (isWeb) return await getWebAIResponse(message);
         const aiApiUrl = process.env.NEXT_PUBLIC_API_URL;
         const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 

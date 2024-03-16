@@ -1,3 +1,5 @@
+import { ActivityData, aiAnalysis } from './components/ai';
+
 export type CollegeStage =
   | '高中'
   | '大专'
@@ -20,6 +22,10 @@ export type UserBaseInfo = {
   advantage: string; //个人优势
   email: string;
   password: string;
+  skillPoint1: ActivityData;
+  skillPoint2: ActivityData;
+  skillPoint3: ActivityData;
+  stageAnalysis: aiAnalysis; //阶段分析
 };
 
 export type MessageArgs = {
