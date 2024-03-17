@@ -25,19 +25,14 @@ export const revalidate = 10;
 // }
 
 export default function Home({ params }: { params: { lang: Locale } }) {
-  const {
-    setUser,
-    isLogin,
-    setIsLogin,
-    user,
-    analyticsResult,
-    setAnalyticsResult
-  } = useUserStore();
+  const { setUser, isLogin, setIsLogin, user } = useUserStore();
   useEffect(() => {
     isLogin &&
       getUserInfo().then((res) => {
         if (res) {
           setIsLogin(true);
+          if (typeof res.stageAnalysis === 'string')
+            res.stageAnalysis = JSON.parse(res.stageAnalysis);
           setUser(res);
         }
       });
@@ -78,7 +73,7 @@ export default function Home({ params }: { params: { lang: Locale } }) {
             <Progress />
             <div className="mt-4 flex flex-col p-6">
               <h1>To Do List</h1>
-              <p>{analyticsResult?.建议活动}</p>
+              <p>{user?.stageAnalysis?.建议活动 || ''}</p>
               <div className="flex w-[75vw] justify-between">
                 <Card title="实习" style={{ width: '20vw' }}></Card>
                 <Card title="技能提升" style={{ width: '20vw' }}></Card>

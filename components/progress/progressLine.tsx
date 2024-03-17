@@ -9,10 +9,10 @@ import { Steps } from 'antd';
 import { useUserStore } from '@/store/userStore';
 
 const ProgressLine: React.FC = () => {
-  const { analyticsResult } = useUserStore();
+  const { user } = useUserStore();
   return (
     <Steps
-      current={Number(analyticsResult?.分析结果) || 0}
+      current={Number(user?.stageAnalysis.分析结果) || 0}
       items={[
         {
           title: '探索阶段',

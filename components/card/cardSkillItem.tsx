@@ -14,7 +14,10 @@ type CardSkillItemProps = {
 
 const CardSkillItem: React.FC<CardSkillItemProps> = ({ item }) => {
   const title = item.title;
-  const content = item.description;
+  const content =
+    typeof item.description === 'string'
+      ? JSON.parse(item.description)
+      : item.description;
   const router = useRouter();
   const { setSkillDisplayItem } = useSkillStore();
   const handleClick = async () => {
@@ -37,14 +40,9 @@ const CardSkillItem: React.FC<CardSkillItemProps> = ({ item }) => {
       >
         {Object.keys(content).map((key) => {
           return (
-            <>
-              <Typography.Text key={key}>
-                {key}: {content[key as keyof typeof content]}
-              </Typography.Text>
-              <Button type="primary" onClick={handleClick}>
-                Get Started
-              </Button>
-            </>
+            <Typography.Text key={key}>
+              {key}:{content[key]}
+            </Typography.Text>
           );
         })}
       </Flex>
