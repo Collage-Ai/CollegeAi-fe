@@ -35,10 +35,18 @@ const CardSkillItem: React.FC<CardSkillItemProps> = ({ item }) => {
         justify="space-between"
         style={{ padding: 24 }}
       >
-        <Typography.Text>{content}</Typography.Text>
-        <Button type="primary" onClick={handleClick}>
-          Get Started
-        </Button>
+        {Object.keys(content).map((key) => {
+          return (
+            <>
+              <Typography.Text key={key}>
+                {key}: {content[key as keyof typeof content]}
+              </Typography.Text>
+              <Button type="primary" onClick={handleClick}>
+                Get Started
+              </Button>
+            </>
+          );
+        })}
       </Flex>
     </Card>
   );

@@ -16,6 +16,7 @@ const SkillComponent: React.FC = () => {
   useEffect(
     () => {
       getSkillList().then((res) => {
+        res = formatSkillList(res);
         setSkillList(res);
         // 在数据设置后进行筛选
         setInternshipList(res.filter((item) => item.type === '实习'));
@@ -32,19 +33,31 @@ const SkillComponent: React.FC = () => {
       // setSkillList3
     ]
   );
+  //将description转换为json
+  const formatSkillList = (item: SkillArgs[]) => {
+    return item.map((skill) => {
+      return {
+        ...skill,
+        description:
+          typeof skill.description === 'string'
+            ? JSON.parse(skill.description)
+            : skill.description
+      };
+    });
+  };
 
   return (
     <div>
       <Card>
         <Row justify="center" gutter={16}>
-          <Col span={6}>
+          {/* <Col span={6}>
             <Card title="实习">
               <List
                 dataSource={internshipList}
                 renderItem={(item: SkillArgs) => <CardSkillItem item={item} />}
               />
             </Card>
-          </Col>
+          </Col> */}
           <Col span={6}>
             <Card title="技能点1">
               <List

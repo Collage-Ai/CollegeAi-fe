@@ -26,7 +26,7 @@ const HoverInput = ({ onFinish, setShowOverlay, showOverlay }: InputProps) => {
   };
 
   return (
-    <div className={`absolute ${showOverlay ? 'z-10' : ''} bottom-4 flex p-10`}>
+    <div className={`fixed ${showOverlay ? 'z-10' : ''} bottom-4 flex p-10`}>
       <Input
         value={value}
         onChange={handleChange}
