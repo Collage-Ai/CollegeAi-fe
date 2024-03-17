@@ -4,6 +4,7 @@ import { Button, Card, Flex, Typography } from 'antd';
 import PropTypes from 'prop-types';
 import { useSkillStore } from '@/store/userStore';
 import { sendSkillInfoToServer } from '@/utils/fetcher';
+import { ActivityInfo } from '../../types/components/ai';
 
 type SkillDisplayComponentProps = {
   skill: SkillArgs;
@@ -35,7 +36,7 @@ const SkillDisplayComponent: React.FC<SkillDisplayComponentProps> = ({
         type="skill"
         skillOptions={categoryList.filter((item) => item.type === 'skill')}
       /> */}
-      <Typography.Text>{skill.description}</Typography.Text>
+      <Typography.Text>{skill.description.活动简介}</Typography.Text>
       <Flex>
         <Button type="primary" onClick={addCategory}>
           归档
@@ -49,7 +50,14 @@ SkillDisplayComponent.propTypes = {
   skill: PropTypes.shape({
     userId: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    description: PropTypes.shape({
+      活动名称: PropTypes.string.isRequired,
+      活动日期: PropTypes.string.isRequired,
+      活动地点: PropTypes.string.isRequired,
+      活动简介: PropTypes.string.isRequired,
+      参与方式: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired
+    }).isRequired,
     category: PropTypes.number.isRequired
   }).isRequired
 };
