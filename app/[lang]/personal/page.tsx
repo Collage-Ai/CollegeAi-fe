@@ -2,11 +2,17 @@
 import withAuth from '@/components/auth';
 import BackButton from '@/components/button/backButton';
 import RegisterForm from '@/components/user/register';
+import { useUserStore } from '@/store/userStore';
 import { Card } from 'antd';
+import { useRouter } from 'next/navigation';
 
 function Page() {
-  const handleRegisterSuccess = () => {
-    console.log('成功');
+  const { setIsLogin } = useUserStore();
+  const Router = useRouter();
+  const handleLogout = () => {
+    // 处理注册成功逻辑
+    setIsLogin(false);
+    Router.push('/login');
   };
   return (
     <>
@@ -16,10 +22,7 @@ function Page() {
         hoverable
         bordered
       >
-        <RegisterForm
-          isPersonal={true}
-          onRegisterSuccess={handleRegisterSuccess}
-        />
+        <RegisterForm isPersonal={true} onRegisterSuccess={handleLogout} />
       </Card>
       ;
     </>

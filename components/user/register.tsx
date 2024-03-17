@@ -7,6 +7,7 @@ import { getSMSCode, postRegData, updateUserInfo } from '@/utils/fetcher';
 import toast from '../toast/toast';
 import { useStateCallback } from '@/utils/hook';
 import { useUserStore } from '@/store/userStore';
+import { deleteCookie } from '@/utils/cookie';
 
 type RegisterFormProps = {
   onRegisterSuccess: () => void;
@@ -65,6 +66,11 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
         }, 1000);
       }
     });
+  };
+
+  const logout = () => {
+    deleteCookie('token');
+    onRegisterSuccess();
   };
 
   useEffect(() => {
@@ -233,6 +239,17 @@ const RegisterForm = ({ onRegisterSuccess, isPersonal }: RegisterFormProps) => {
         <Button type="primary" htmlType="submit" loading={loading}>
           {isPersonal ? '保存' : '注册'}
         </Button>
+        {isPersonal && (
+          <Button
+            type="primary"
+            htmlType="button"
+            onClick={() => logout()}
+            className="ml-4"
+            danger
+          >
+            退出登录
+          </Button>
+        )}
       </Form.Item>
     </Form>
   );
