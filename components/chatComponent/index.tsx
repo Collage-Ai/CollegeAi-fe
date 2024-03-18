@@ -66,9 +66,15 @@ const ChatComponent = ({ type, search }: ChatComponentProps) => {
       setSelectValue(msg.userMsg);
       getAIResponse({ message: msg.userMsg, isWeb: isWebChat })
         .then((res) => {
-          msg.aiMsg = res as string;
-          updateChatList(msg);
-          setSelectedAiValue(res as string);
+          if (isWebChat) {
+            msg.aiMsg = res.content as string;
+            updateChatList(msg);
+            setSelectedAiValue(res.content as string);
+          } else {
+            msg.aiMsg = res as string;
+            updateChatList(msg);
+            setSelectedAiValue(res as string);
+          }
         })
         .finally(() => {
           setIsLoading(false); // 无论请求成功还是失败，都将加载状态设置回false
