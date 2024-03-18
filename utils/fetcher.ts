@@ -6,6 +6,7 @@ import { deleteCookie, getCookie, setCookie } from './cookie';
 import { SkillArgs } from '@/types/components/skill';
 import { CategoryArgs } from '@/types/components/category';
 import axios from 'axios';
+import toast from '@/components/toast/toast';
 
 // utils/fetcher.ts
 export const fetcher = (url: string) => request(url).then((res) => res.json());
@@ -318,10 +319,10 @@ export const getWebAIResponse = async (message: string): Promise<string> => {
       userInfo: useUserStore.getState().user,
       field: useUserStore.getState().user?.career
     });
-    console.log(res.data);
     return res.data;
   } catch (err) {
     console.error(err);
+    toast.error('AI服务异常，请稍后再试');
     return '';
   }
 };
