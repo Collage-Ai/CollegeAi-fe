@@ -28,7 +28,11 @@ export async function getAIResponse({
   return new Promise((resolve, reject) => {
     debounceTimer = setTimeout(async () => {
       try {
-        if (isWeb) return await getWebAIResponse(message);
+        if (isWeb) {
+          const res = await getWebAIResponse(message);
+          console.log('res', res);
+          resolve(res);
+        }
         const aiApiUrl = process.env.NEXT_PUBLIC_API_URL;
         const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
