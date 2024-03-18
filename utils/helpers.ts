@@ -179,3 +179,14 @@ export const uniqueArray = (arr: any[], uniId: string) => {
   const res = new Map();
   return arr.filter((item) => !res.has(item[uniId]) && res.set(item[uniId], 1));
 };
+
+/**
+ * @description 安全的JSON.parse
+ */
+export const safeJsonParse = (str: string) => {
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    return str;
+  }
+};
