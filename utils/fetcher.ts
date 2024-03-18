@@ -5,6 +5,7 @@ import { useUserStore } from '@/store/userStore';
 import { deleteCookie, getCookie, setCookie } from './cookie';
 import { SkillArgs } from '@/types/components/skill';
 import { CategoryArgs } from '@/types/components/category';
+import axios from 'axios';
 
 // utils/fetcher.ts
 export const fetcher = (url: string) => request(url).then((res) => res.json());
@@ -310,24 +311,15 @@ export const updateUserInfo = async (data: UserBaseInfo): Promise<boolean> => {
  * */
 export const getWebAIResponse = async (message: string): Promise<string> => {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_WEB_CHAT_URL ?? '', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        query: message,
-        isSort: false,
-        type: 'insight',
-        userInfo: useUserStore.getState().user,
-        field: useUserStore.getState().user?.career
-      })
+    const res = await axios.post(process.env.NEXT_PUBLIC_WEB_CHAT_URL ?? '', {
+      query: message,
+      isSort: false,
+      type: 'insight',
+      userInfo: useUserStore.getState().user,
+      field: useUserStore.getState().user?.career
     });
-    if (res.ok) {
-      const data = await res.json();
-      return data;
-    }
-    return '';
+    console.log(res.data);
+    return res.data;
   } catch (err) {
     console.error(err);
     return '';
