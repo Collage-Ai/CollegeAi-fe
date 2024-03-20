@@ -1,34 +1,29 @@
-# Nextjs Starter
+# CollegeAi 前端部分
 
-> 这是一个 nextjs with turbopack 的 starter。兼顾 项目和 Nodejs + Prisma 后端。你可以纯 nextjs 前端，也可以前后端一起写，做一个小全栈仔。
+CollegeAi 是一个接入 GPT 模型的学生职业规划平台，通过 Ai 智能分析，与 Ai 进行行业对话的方式，帮助学生更好的了解自己，找到适合自己的职业方向。
 
 **中文** | [English](./README.md)
 
-## Getting Started
+## 开始
+
+项目使用的是 pnpm 作为包管理工具，如果没有安装 pnpm,请先安装 pnpm
+
+```bash
+npm install -g pnpm
+```
 
 开发运行命令
 
 ```bash
-npm run dev
-# 或者
-yarn dev
+pnpm run dev
 ```
 
-用浏览器打开 [http://localhost:3000](http://localhost:3000)
+用浏览器打开 [http://localhost:3000](http://localhost:3000),可以看到前端页面。
+项目需配置一些环境变量，具体请参考[.env.example](./.env.example),主要是后端服务以及 GPT 接口的相关配置。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 技术栈
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-这个目录 `pages/api` 是 `/api/*`下路由，用来写 API 或者是对后端 api 做中转
-
-## 学习更多
-
-为了学习 nextjs，请查看一下文档：
-
-- [Next.js Beta 文档](https://beta.nextjs.org) - 了解最新的 nextjs 特行
-- [Next.js 标准文档](https://nextjs.org/docs) - 学习 Next.js 通用特性和 API.
-- [学习 Next.js](https://nextjs.org/learn) - tutorial.
+项目使用基于 React 的 Nextjs 框架，使用 prisma 作为数据库操作工具，使用 tailwindcss 作为 css 框架，使用 pnpm 作为包管理工具。
 
 ## 一些特性
 
