@@ -1,3 +1,13 @@
+# CollegeAi
+
+简要介绍：CollegeAi是一个创新的生涯规划辅助平台，旨在通过GPT技术整合网络信息，提供个性化生涯规划指导，帮助用户明确职业方向和专业认知。
+亮点有：
+- 采用Next.js框架优化SEO和提升开发效率，并接入Antd组件库进行快速开发
+- 使用Node.js的Nest.js框架和MySQL数据库搭建稳定且可扩展的后端服务，确保了项目的稳定性和扩展性。
+- 整合AI服务，采用阿里云Serverless云函数开发AI搜索功能，加速开发调试并方便部署。
+- 对关键功能AI聊天进行调优，自主开发gpt-search联网搜索功能，使用PromiseAll进行并行优化，提升响应速度20%。
+- 对AI大模型进行prompt优化，使用高级fine-tuning及function-calling等微调减少token使用并优化响应效果
+
 # Nextjs Starter
 
 > This is a starter for nextjs with turbopack. Consider both project and Nodejs + Prisma backend. You can use the pure nextjs front-end, or you can write the front-end and back-end together to make a small full-stack boy.
